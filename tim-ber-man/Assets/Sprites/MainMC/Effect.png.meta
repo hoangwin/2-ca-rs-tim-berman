@@ -1,0 +1,127 @@
+fileFormatVersion: 2
+guid: 10ce659e4152f0d4e8dfd399de9b0609
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Bird_3
+    21300002: Bird_4
+    21300004: Bird_5
+    21300006: Bird_6
+    21300008: bird_4
+    21300010: bird_5
+    21300012: bird_6
+    21300014: bird_7
+    21300016: bird_8
+    21300018: bird_9
+    21300020: Effect_0
+    21300022: Effect_1
+    21300024: Effect_2
+    21300026: Effect_3
+    21300028: Effect_4
+    21300030: Effect_5
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: Effect_0
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 414
+        width: 67
+        height: 60
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Effect_1
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 392
+        width: 88
+        height: 84
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Effect_2
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 278
+        width: 95
+        height: 91
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Effect_3
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 291
+        width: 96
+        height: 93
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Effect_4
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 154
+        width: 97
+        height: 92
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Effect_5
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 155
+        width: 109
+        height: 104
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
