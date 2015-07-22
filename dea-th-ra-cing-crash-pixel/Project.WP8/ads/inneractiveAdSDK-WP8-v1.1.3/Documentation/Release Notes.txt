@@ -1,0 +1,8 @@
+Release Notes
+=============
+
+InneractiveAdSDK-WP8-v1.1.3
+- Release date: 02/14/13
+- Supports WP 8.0
+- optional and required height and width can be sent from XAML as well
+- ad request bug fix.

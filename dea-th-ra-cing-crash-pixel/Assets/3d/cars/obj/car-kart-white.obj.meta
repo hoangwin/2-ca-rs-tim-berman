@@ -1,0 +1,102 @@
+fileFormatVersion: 2
+guid: 60c2f57ee4ca3e546a72372a97dae38c
+timeCreated: 1425866794
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: car-kart-white_Cube.917_carmaterial_blue
+    100004: car-kart-white_Cube.917_carmaterial_orange
+    100006: car-kart-white_Cube.917_metal
+    100008: car-kart-white_Cube.917_metal.black
+    100010: car-kart-white_Cube.917_tires
+    100012: car-kart-white_Cube.917_white
+    100014: car-kart-white_Cube.917_windows
+    400000: //RootNode
+    400002: car-kart-white_Cube.917_carmaterial_blue
+    400004: car-kart-white_Cube.917_carmaterial_orange
+    400006: car-kart-white_Cube.917_metal
+    400008: car-kart-white_Cube.917_metal.black
+    400010: car-kart-white_Cube.917_tires
+    400012: car-kart-white_Cube.917_white
+    400014: car-kart-white_Cube.917_windows
+    2300000: car-kart-white_Cube.917_carmaterial_blue
+    2300002: car-kart-white_Cube.917_carmaterial_orange
+    2300004: car-kart-white_Cube.917_metal
+    2300006: car-kart-white_Cube.917_metal.black
+    2300008: car-kart-white_Cube.917_tires
+    2300010: car-kart-white_Cube.917_white
+    2300012: car-kart-white_Cube.917_windows
+    3300000: car-kart-white_Cube.917_carmaterial_blue
+    3300002: car-kart-white_Cube.917_carmaterial_orange
+    3300004: car-kart-white_Cube.917_metal
+    3300006: car-kart-white_Cube.917_metal.black
+    3300008: car-kart-white_Cube.917_tires
+    3300010: car-kart-white_Cube.917_white
+    3300012: car-kart-white_Cube.917_windows
+    4300000: car-kart-white_Cube.917_carmaterial_blue
+    4300002: car-kart-white_Cube.917_carmaterial_orange
+    4300004: car-kart-white_Cube.917_metal
+    4300006: car-kart-white_Cube.917_metal.black
+    4300008: car-kart-white_Cube.917_tires
+    4300010: car-kart-white_Cube.917_white
+    4300012: car-kart-white_Cube.917_windows
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
