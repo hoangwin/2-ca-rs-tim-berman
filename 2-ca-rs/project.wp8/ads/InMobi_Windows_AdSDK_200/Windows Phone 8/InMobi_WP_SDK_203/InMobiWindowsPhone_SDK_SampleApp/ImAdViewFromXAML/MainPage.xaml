@@ -1,0 +1,69 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="ImAdViewFromXAML.MainPage"
+    xmlns:InMobiSDK="clr-namespace:InMobi.WP.AdSDK;assembly=InMobiWPAdSDK"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" >
+            <TextBlock x:Name="ApplicationTitle" Text="InMobi SDK Sample" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="IMAdView using XAML" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="36"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1">
+            <StackPanel Name="AdStackpanel">
+                <!--Replace AppId with your AppId -->
+                <InMobiSDK:IMAdView 
+                            Name="AdView"                            
+                            AdSize="15"                            
+                            AppId="YOUR_APP_ID" 
+                            OnAdRequestFailed="AdView_AdRequestFailed"
+                            OnAdRequestLoaded="AdView_AdRequestLoaded"
+                            OnDismissAdScreen="AdView_DismissFullAdScreen"
+                            OnLeaveApplication="AdView_LeaveApplication"
+                            OnShowAdScreen="AdView_ShowFullAdScreen"
+                            Loaded="AdView_Loaded"
+                            Unloaded="AdView_Unloaded">
+                </InMobiSDK:IMAdView>
+                <StackPanel Margin="0,200">
+                <Button Name="btnLoadAd" 
+                        Content="Load Ad" 
+                        FontSize="20" Click="btnLoadAd_Click_1"></Button>
+                    <Button Name="btnxaml" 
+                        Content="Configure IMAdView in XAML" 
+                        FontSize="20"                        
+                        Click="btnxaml_Click"  
+                        VerticalAlignment="Bottom"/>
+                    
+                    <Button Name="btnIntAd"
+                            Content="Interstitial Ad"
+                            Click="btnIntAd_Click"
+                            >
+                        
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+ 
+   
+
+</phone:PhoneApplicationPage>
