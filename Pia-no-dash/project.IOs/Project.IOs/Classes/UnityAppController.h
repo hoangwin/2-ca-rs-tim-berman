@@ -18,6 +18,7 @@
 	UIWindow*			_window;
 	UIView*				_rootView;
 	UIViewController*	_rootController;
+	UIView*				_snapshotView;
 
 	DisplayConnection*	_mainDisplay;
 

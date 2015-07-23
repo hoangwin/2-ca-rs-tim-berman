@@ -252,7 +252,7 @@ extern "C" {//here
 
 	[self showGameUI];
 //rem here for banner	[self showiAd];//here
-	[self showAdmob];//here
+//	[self showAdmob];//here
 	[self createDisplayLink];
 
 	UnitySetPlayerFocus(1);
