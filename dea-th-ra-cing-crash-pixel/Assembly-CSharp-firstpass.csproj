@@ -52,7 +52,6 @@
      <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
      <None Include="Assets\3d\cars\readme.txt" />
      <None Include="Assets\3d\cars\license.txt" />
-     <None Include="Assets\3d\tree\archibase.net.txt" />
      <None Include="Assets\Platform\flatform2\readme.txt" />
      <None Include="Assets\Platform\flatform2\license.txt" />
      <None Include="Assets\3d\vehicle_asset_v1\readme.txt" />
