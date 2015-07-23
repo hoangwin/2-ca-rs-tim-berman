@@ -50,12 +50,14 @@
 	@protocol MTLTexture;
 	@protocol MTLCommandBuffer;
 	@protocol MTLCommandQueue;
+	@protocol MTLCommandEncoder;
 
 	typedef id<CAMetalDrawable>		CAMetalDrawableRef;
 	typedef id<MTLDevice>			MTLDeviceRef;
 	typedef id<MTLTexture>			MTLTextureRef;
 	typedef id<MTLCommandBuffer>	MTLCommandBufferRef;
 	typedef id<MTLCommandQueue>		MTLCommandQueueRef;
+	typedef id<MTLCommandEncoder>	MTLCommandEncoderRef;
 #else
 	typedef struct objc_object		CAMetalLayer;
 	typedef struct objc_object*		CAMetalDrawableRef;
@@ -63,6 +65,7 @@
 	typedef struct objc_object*		MTLTextureRef;
 	typedef struct objc_object*		MTLCommandBufferRef;
 	typedef struct objc_object*		MTLCommandQueueRef;
+	typedef struct objc_object*		MTLCommandEncoderRef;
 #endif
 
 
@@ -79,7 +82,7 @@ typedef struct RenderSurfaceBase* UnityRenderBuffer;
 typedef struct
 UnityRenderBufferDesc
 {
-	unsigned	width, height;
+	unsigned	width, height, depth;
 	unsigned	samples;
 
 	int			backbuffer;

@@ -85,18 +85,28 @@
                 <mask key="subviews">
                     <exclude reference="gVh-4A-1je"/>
                 </mask>
+                <mask key="constraints">
+                    <exclude reference="S6m-R2-QBg"/>
+                    <exclude reference="VWh-bq-Pfv"/>
+                    <exclude reference="pQa-S3-BOy"/>
+                    <exclude reference="yJz-b3-xuQ"/>
+                </mask>
             </variation>
             <variation key="heightClass=compact">
                 <mask key="subviews">
                     <include reference="gVh-4A-1je"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="S6m-R2-QBg"/>
+                    <include reference="VWh-bq-Pfv"/>
+                    <include reference="pQa-S3-BOy"/>
+                    <include reference="yJz-b3-xuQ"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
                 <mask key="subviews">
                     <include reference="gVh-4A-1je"/>
                 </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=compact">
                 <mask key="constraints">
                     <include reference="S6m-R2-QBg"/>
                     <include reference="VWh-bq-Pfv"/>

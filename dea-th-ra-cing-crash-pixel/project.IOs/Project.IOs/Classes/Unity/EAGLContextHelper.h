@@ -12,6 +12,7 @@ extern "C" void DeallocateRenderBufferStorageFromEAGLLayer(void* eaglContext);
 
 extern "C" EAGLContext*	UnityCreateContextEAGL(EAGLContext* parent, int api);
 extern "C" void			UnityMakeCurrentContextEAGL(EAGLContext* context);
+extern "C" EAGLContext*	UnityGetCurrentContextEAGL();
 
 #if __OBJC__
 

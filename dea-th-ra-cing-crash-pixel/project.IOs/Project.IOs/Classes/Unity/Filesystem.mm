@@ -48,3 +48,17 @@ extern "C" const char* const* UnityFontDirs()
 	};
 	return dirs;
 }
+
+extern "C" const char* const* UnityFontFallbacks()
+{
+	static const char* const fonts[] = {
+		"Hiragino Kaku Gothic ProN",
+		".Hiragino Kaku Gothic Interface", // Japanese characters on 8.2/8.3
+		"Heiti TC",
+		".Sukhumvit Set UI", // Thai characters on 8.2
+		"AppleGothic",
+		".LastResort",
+		NULL
+	};
+	return fonts;
+}

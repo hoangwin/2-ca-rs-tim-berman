@@ -18,11 +18,13 @@ extern bool _unityAppReady;
 
 @implementation UnityAppController (ViewHandling)
 
-// ios is not sending "change orientation" notifications on startup, so we should handle it manually
-- (void)handleStartupOrientation:(UIInterfaceOrientation)orientation
+// special case for when we DO know the app orientation, but dont get it through normal mechanism (UIViewController orientation handling)
+// how can this happen:
+// 1. On startup: ios is not sending "change orientation" notifications on startup (but rather we "start" in correct one already)
+// 2. When using presentation controller it can override orientation constraints, so on dismissing we need to tweak app orientation;
+//      pretty much like startup situation UIViewController would have correct orientation, and app will be out-of-sync
+- (void)updateAppOrientation:(UIInterfaceOrientation)orientation
 {
-	NSAssert(_curOrientation == UIInterfaceOrientationUnknown, @"handleStartupOrientation should be called only before orientation is known");
-
 	_curOrientation = orientation;
 	[_unityView willRotateToOrientation:orientation fromOrientation:(UIInterfaceOrientation)UIInterfaceOrientationUnknown];
 	[_unityView didRotate];
@@ -73,7 +75,7 @@ extern bool _unityAppReady;
 	}
 
 	if(_curOrientation == UIInterfaceOrientationUnknown)
-		[self handleStartupOrientation:ret.interfaceOrientation];
+		[self updateAppOrientation:ret.interfaceOrientation];
 
 	return ret;
 }
@@ -104,6 +106,12 @@ extern bool _unityAppReady;
 	[_unityView didRotate];
 }
 
+- (UIView*)createSnapshotView
+{
+	if([_rootView respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+		return [_rootView snapshotViewAfterScreenUpdates:YES];
+	return nil;
+}
 
 - (void)createUI
 {

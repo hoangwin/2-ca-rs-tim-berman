@@ -4,10 +4,6 @@
 #include <string>
 
 
-NSString* const UIKeyboardWillChangeFrameNotification = @"UIKeyboardWillChangeFrameNotification";
-NSString* const UIKeyboardDidChangeFrameNotification = @"UIKeyboardDidChangeFrameNotification";
-
-
 static KeyboardDelegate*	_keyboard = nil;
 
 static bool					_shouldHideInput = false;
@@ -15,25 +11,35 @@ static bool					_shouldHideInputChanged = false;
 
 @implementation KeyboardDelegate
 {
+	// UI handling
+	// in case of single line we use UITextField inside UIToolbar
+	// in case of multi-line input we use UITextView with UIToolbar as accessory view
 	UITextView*		textView;
 	UITextField*	textField;
-
-	UIView*			inputView;
 	UIToolbar*		toolbar;
-	CGRect			_area;
 
+	// keep toolbar items for both single- and multi- line edit in NSArray to make sure they are kept around
 	NSArray*		viewToolbarItems;
 	NSArray*		fieldToolbarItems;
 
+	// inputView is view used for actual input (it will be responder): UITextField [single-line] or UITextView [multi-line]
+	// editView is the "root" view for keyboard: UIToolbar [single-line] or UITextView [multi-line]
+	UIView*			inputView;
+	UIView*			editView;
+
+
+	CGRect			_area;
 	NSString*		initialText;
 
 	UIKeyboardType	keyboardType;
-	BOOL			multiline;
 
+	BOOL			_multiline;
 	BOOL			_inputHidden;
 	BOOL			_active;
 	BOOL			_done;
 	BOOL			_canceled;
+
+	BOOL			_rotating;
 }
 
 @synthesize area;
@@ -73,37 +79,19 @@ static bool					_shouldHideInputChanged = false;
 
 - (void)keyboardWillHide:(NSNotification*)notification;
 {
-	_area = CGRectMake(0,0,0,0);
-
-	if (inputView == nil)
-		return;
-
-	toolbar.hidden = YES;
-	if(textView)
-		textView.hidden = YES;
-
-	_active = [self isInputViewStillEditing];
+	[self systemHideKeyboard];
 }
-
 - (void)keyboardDidChangeFrame:(NSNotification*)notification;
 {
 	_active = true;
 
-	CGRect srcRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+	CGRect srcRect	= [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 	CGRect rect		= [UnityGetGLView() convertRect:srcRect fromView: nil];
 
-	if( rect.origin.y >= [UnityGetGLView() bounds].size.height )
-	{
-		_active = [self isInputViewStillEditing];
-		toolbar.hidden = YES;
-
-		if(textView)
-			textView.hidden = YES;
-	}
+	if(rect.origin.y >= [UnityGetGLView() bounds].size.height)
+		[self systemHideKeyboard];
 	else
-	{
 		[self positionInput:rect x:rect.origin.x y:rect.origin.y];
-	}
 }
 
 + (void)Initialize
@@ -138,13 +126,13 @@ static bool					_shouldHideInputChanged = false;
 		textField.font = [UIFont systemFontOfSize:20.0];
 		textField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-		toolbar = [[UIToolbar alloc] initWithFrame :CGRectMake(0,160,320,64)];
+		toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,160,320,64)];
 		toolbar.hidden = YES;
 		UnitySetViewTouchProcessing(toolbar, touchesIgnored);
 
 		UIBarButtonItem* inputItem	= [[UIBarButtonItem alloc] initWithCustomView:textField];
-		UIBarButtonItem* doneItem	= [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target:self action:@selector(textInputDone:)];
-		UIBarButtonItem* cancelItem	= [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(textInputCancel:)];
+		UIBarButtonItem* doneItem	= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(textInputDone:)];
+		UIBarButtonItem* cancelItem	= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(textInputCancel:)];
 
 		viewToolbarItems	= @[doneItem, cancelItem];
 		fieldToolbarItems	= @[inputItem, doneItem, cancelItem];
@@ -161,24 +149,14 @@ static bool					_shouldHideInputChanged = false;
 	return self;
 }
 
-- (void)showUI
-{
-	[UnityGetGLView() addSubview:toolbar];
-	if(multiline)
-		[UnityGetGLView() addSubview:inputView];
-
-	[inputView becomeFirstResponder];
-}
-
-
-- (void)show:(KeyboardShowParam)param
+- (void)setKeyboardParams:(KeyboardShowParam)param
 {
 	if(_active)
 		[self hide];
 
 	initialText = param.text ? [[NSString alloc] initWithUTF8String: param.text] : @"";
 
-	multiline = param.multiline;
+	_multiline = param.multiline;
 	if(param.multiline)
 	{
 		[textView setText: initialText];
@@ -195,33 +173,55 @@ static bool					_shouldHideInputChanged = false;
 		[textField setAutocorrectionType: param.autocorrectionType];
 		[textField setSecureTextEntry: (BOOL)param.secure];
 		[textField setKeyboardAppearance: param.appearance];
+
+		textView.inputAccessoryView = toolbar;
 	}
 
-	inputView = multiline ? textView : textField;
-	toolbar.items = multiline ? viewToolbarItems : fieldToolbarItems;
+	toolbar.items = _multiline ? viewToolbarItems : fieldToolbarItems;
+
+	inputView	= _multiline ? textView : textField;
+	editView	= _multiline ? textView : toolbar;
 
 	[self shouldHideInput:_shouldHideInput];
-	// if we unhide everything now the input will be shown smaller then needed quickly (and resized later)
-	// so unhide only when keyboard is shown
-	toolbar.hidden = YES;
 
 	_done		= NO;
 	_canceled	= NO;
 	_active		= YES;
-
-	[self performSelectorOnMainThread: @selector(showUI) withObject:nil waitUntilDone:NO];
 }
 
-- (void)hide
+// we need to show/hide keyboard to react to orientation too, so extract we extract UI fiddling
+
+- (void)showUI
 {
-	[self keyboardWillHide:nil];
+	// if we unhide everything now the input will be shown smaller then needed quickly (and resized later)
+	// so unhide only when keyboard is actually shown (we will update it when reacting to ios notifications)
+	editView.hidden = YES;
+
+	[UnityGetGLView() addSubview:editView];
+	[inputView becomeFirstResponder];
+}
+- (void)hideUI
+{
 	[inputView resignFirstResponder];
 
-	if(multiline)
-		[inputView removeFromSuperview];
+	[editView removeFromSuperview];
+	editView.hidden = YES;
+}
+- (void)systemHideKeyboard
+{
+	_active = editView.isFirstResponder;
+	editView.hidden = YES;
 
-	[toolbar removeFromSuperview];
+	_area = CGRectMake(0,0,0,0);
+}
 
+- (void)show
+{
+	[self showUI];
+}
+- (void)hide
+{
+	[self hideUI];
 	_done = YES;
 }
 
@@ -234,28 +234,28 @@ static bool					_shouldHideInputChanged = false;
 	}
 
 	textField.returnKeyType = _inputHidden ? UIReturnKeyDone : UIReturnKeyDefault;
-	toolbar.hidden = _inputHidden ? YES : NO;
-	inputView.hidden = _inputHidden ? YES : NO;
+
+	editView.hidden		= _inputHidden ? YES : NO;
+	inputView.hidden	= _inputHidden ? YES : NO;
 }
 
 - (void)positionInput:(CGRect)kbRect x:(float)x y:(float)y
 {
 	static const unsigned kInputBarSize = 48;
 
-	if (multiline)
+	if(_multiline)
 	{
 		// use smaller area for iphones and bigger one for ipads
 		int height = UnityDeviceDPI() > 300 ? 75 : 100;
 
-		toolbar.frame		= CGRectMake(0, y - kInputBarSize, kbRect.size.width, kInputBarSize);
-		inputView.frame		= CGRectMake(0, y - kInputBarSize - height,kbRect.size.width, height);
+		editView.frame	= CGRectMake(0, y - kInputBarSize, kbRect.size.width, height);
 	}
 	else
 	{
 		CGRect   statusFrame	= [UIApplication sharedApplication].statusBarFrame;
 		unsigned statusHeight	= statusFrame.size.height;
 
-		toolbar.frame	= CGRectMake(0, y - kInputBarSize - statusHeight, kbRect.size.width, kInputBarSize);
+		editView.frame	= CGRectMake(0, y - kInputBarSize - statusHeight, kbRect.size.width, kInputBarSize);
 		inputView.frame	= CGRectMake(inputView.frame.origin.x, inputView.frame.origin.y,
 									 kbRect.size.width - 3*18 - 2*50, inputView.frame.size.height
 									);
@@ -267,46 +267,38 @@ static bool					_shouldHideInputChanged = false;
 
 - (CGRect)queryArea
 {
-	return toolbar.hidden ? _area : CGRectUnion(_area, toolbar.frame);
+	return editView.hidden ? _area : CGRectUnion(_area, editView.frame);
 }
 
 + (void)StartReorientation
 {
-	[CATransaction begin];
+	if(_keyboard && _keyboard.active)
 	{
-		if(_keyboard && _keyboard.active)
-		{
-			if( _keyboard->multiline )
-				_keyboard->inputView.hidden = YES;
+		[CATransaction begin];
+		[_keyboard hideUI];
+		[CATransaction commit];
 
-			_keyboard->toolbar.hidden = YES;
-		}
+		// not pretty but seems like easiest way to keep "we are rotating" status
+		_keyboard->_rotating = YES;
 	}
-	[CATransaction commit];
 }
 
 + (void)FinishReorientation
 {
-	[CATransaction begin];
+	if(_keyboard && _keyboard->_rotating)
 	{
-		if(_keyboard && _keyboard.active)
-		{
-			if( _keyboard->multiline )
-				_keyboard->inputView.hidden = NO;
+		[CATransaction begin];
+		[_keyboard showUI];
+		[CATransaction commit];
 
-			_keyboard->toolbar.hidden = NO;
-
-			[_keyboard->inputView resignFirstResponder];
-			[_keyboard->inputView becomeFirstResponder];
-		}
+		_keyboard->_rotating = NO;
 	}
-	[CATransaction commit];
 }
 
 - (NSString*)getText
 {
 	if(_canceled)	return initialText;
-	else			return multiline ? [textView text] : [textField text];
+	else			return _multiline ? [textView text] : [textField text];
 }
 
 - (void) setTextWorkaround:(id<UITextInput>)textInput text:(NSString*)newText
@@ -323,10 +315,10 @@ static bool					_shouldHideInputChanged = false;
 	// We can't use setText on iOS7 because it does not update the undo stack.
 	// We still prefer setText on other iOSes, because an undo operation results
 	// in a smaller selection shown on the UI
-	if (_ios70orNewer && !_ios80orNewer)
-		[self setTextWorkaround: (multiline ? textView : textField) text:newText];
+	if(_ios70orNewer && !_ios80orNewer)
+		[self setTextWorkaround: (_multiline ? textView : textField) text:newText];
 
-	if (multiline)
+	if(_multiline)
 		[textView setText:newText];
 	else
 		[textField setText:newText];
@@ -353,15 +345,6 @@ static bool					_shouldHideInputChanged = false;
 	_inputHidden = hide;
 }
 
-// Case 665265: on Chinese/Japanese keyboards when opening the suggestions popup
-// and scrolling the list, the keyboard will dismiss.
-// The popup opening triggers a keyboard hide by the OS but the text field still
-// remains in editing mode. Therefore Unity keyboard should remain active if the
-// text field is still first responder.
-- (BOOL)isInputViewStillEditing {
-    return inputView.isFirstResponder;
-}
-
 @end
 
 
@@ -370,7 +353,7 @@ static bool					_shouldHideInputChanged = false;
 //
 //  Unity Interface:
 
-extern "C" void UnityKeyboard_Show(unsigned keyboardType, int autocorrection, int multiline, int secure, int alert, const char* text, const char* placeholder)
+extern "C" void UnityKeyboard_Create(unsigned keyboardType, int autocorrection, int multiline, int secure, int alert, const char* text, const char* placeholder)
 {
 	static const UIKeyboardType keyboardTypes[] =
 	{
@@ -386,8 +369,8 @@ extern "C" void UnityKeyboard_Show(unsigned keyboardType, int autocorrection, in
 
 	static const UITextAutocorrectionType autocorrectionTypes[] =
 	{
-		UITextAutocorrectionTypeDefault,
 		UITextAutocorrectionTypeNo,
+		UITextAutocorrectionTypeDefault,
 	};
 
 	static const UIKeyboardAppearance keyboardAppearances[] =
@@ -405,9 +388,18 @@ extern "C" void UnityKeyboard_Show(unsigned keyboardType, int autocorrection, in
 		(BOOL)multiline, (BOOL)secure
 	};
 
-	[[KeyboardDelegate Instance] show:param];
+	[[KeyboardDelegate Instance] setKeyboardParams:param];
 }
 
+extern "C" void UnityKeyboard_Show()
+{
+	// do not send hide if didnt create keyboard
+	// TODO: probably assert?
+	if(!_keyboard)
+		return;
+
+	[[KeyboardDelegate Instance] show];
+}
 extern "C" void UnityKeyboard_Hide()
 {
 	// do not send hide if didnt create keyboard
