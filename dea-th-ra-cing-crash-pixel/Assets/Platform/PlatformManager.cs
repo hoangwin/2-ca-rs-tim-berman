@@ -77,7 +77,7 @@ public class PlatformManager : MonoBehaviour {
 		Object obj = (Instantiate (prefab, posLastCube, Quaternion.identity));
 		Transform tran = (Transform)obj;
 		tran.Rotate (0, 90, 0);
-		posLastCube.z += 4* 4.0f;
+		posLastCube.z += 4* 7.4f;
 		tran.position = posLastCube;
         float f1 = Random.Range(10, 15);
         float f2 = Random.Range(10, 15);
