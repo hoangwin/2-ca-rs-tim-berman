@@ -1,0 +1,407 @@
+  GameEditor, by Ionut Matasaru
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// History log...
+
+(v. 0.8.1)
++ add a bitset dialog box
++ add two ways of selection (top-down) and ExplorerTreeView
++ optimize loading/exporting time
+****
+* fix bug regarding the unique id for LayerLevel. This was affected the gameSave
+* add new features in gts - triangles, palettes. (see the doc)
+* add template tree groupping in the gts
++ add multiple copy/cut/paste/delete in the explorer Tree
++ add copy/cut/paste for keyframes (in cinematics)
++ add triangles in the ObjectLayer format (these are used for colisions) - use SET command - see SET doc
++ make an automatic save (backup)
++ add SET PALETTE in command in the gts
+
+2007.11.21 (v0.6.9)
+*** Georgeta Blebea
++ Add isometric snap, and also add template snap
+*** Carmen Georgescu
+* Fix view bugs in the game editor
+2007.10.29 (v0.6.8)
+	*** Georgeta Blebea
+	+ Add snapping feature in the game file
+	*** Carmen Georgescu
+	+ Add isometric view in GTS file
+2007.06.26 (v0.6.7)
+	 *** Carmen Georgescu
+     + fixed save operation bug caused by deleting an object layer that had references in cinematic.
+     
+
+2007.03.07 (v0.6.5)
+     + fixed double click on layer Center the scene when double-clicking on the layer name, not on the checkbox
+     + posibility to have the desired background in game. you can use some texture or a image as backgroung
+
+2007.01.17 (v0.6.4)
+    |
+    *** Ionut Matasaru
+    + fixed ObjectLayer rectangle for empty frames (or empty hyper frames)
+    + added multiple SET RECT_AREA support for Object Layers
+    + New: custom export for object layers!
+    *** Dragos Velicu
+    + added REUSE_FLIPPED_TILES option for maps export
+    + multiple selection of object layers
+    + undo redo of tileset map if you modify it from game editor
+    + multiple layer view
+    + Added posibility to copy paste tiles from one map to another if they have the same tileset
+    + Added feature to edit map from gameeditor on his level position instead in 0
+    + Copy/Paste of blank tiles
+    + Find object by ID
+    + multiple selection of object layers move objects using keyboard
+
+2006.11.09 (v0.6.3)
+   |
+   + Added command description in cinematics CMD_CAMERA_SET_POS CMD_CAMERA_CENTER_TO CMD_CAMERA_FOCUS_ON etc
+   + Cinematics new coomand type switch
+   + New cinematics commands and bug fixes
+
+2006.10.17 (v0.6.2)
+    |
+    + Added posibility to save the preview area to an image file (File / Save Preview...)
+    + Export:
+    |    * added tileset mask in I4 format
+    |    * added CLONE_FLIPPED_TILES option
+    |      -> clone flipped tiles used by the maps (adds new modules / frames in the tileset sprite)
+    |    * added option to use Gamewitch old flip flags USE_GAMEWITCH_FLIP_FLAGS
+    |    * added option to not remove unused modules from tileset DONT_REMOVE_UNUSED_MODULES
+    + New cinematics commands and bug fixes
+
+2006.09.28 (v0.6.1)
+    |
+    *** Ionut Matasaru
+    + export of Object Layers:
+    |    * added NOT_EXPORT_OBJ_XY flag
+    |    * the order of export is fixed (new correctly exports parent before children)
+    + the drawing of custom rectangles for object layers is changed
+    + fixed selection of overlaped layers
+
+2006.08.01 (v0.5.9 v0.6.0)
+    |
+    *** Ionut Matasaru
+    + fixed draw of RECT_AREA in ObjectLayers
+    + define a list data type in .gts using:
+    |   * DATA_TYPE LIST "type_name" { <value> = "string" ... [LIST_FILE "SP.list" ...] }
+    + assign a data type for an ObjLayer parameter --> TYPE "type_name"
+    *** Marius Deacu 
+    + added support for cinematics with new editor and cinematics flexible format export
+    *** Ionel Petcu
+    + fixed crush bug when you delete some layers
+    + added posibility to view frame rectangles defined in sprite
+    + option to supress ok message from tileset reload ok
+
+2006.08.01 (v0.5.8)
+    |
+    *** Ionut Matasaru
+    + GameExport
+    |    * added: verify the tileset mask
+    |    * fixed: log for points list
+    *** Ionel Petcu
+    + Fixed bug on clone ID of cloned object is 0
+    *** Marius Deacu
+    + added basic cinematic editor
+
+2006.07.14 (v0.5.7)
+    |
+    *** Ionut Matasaru
+    + GameExport, fixed relative paths for images and palettes of the tileset sprites
+    + new Task command: Camera.CenterTo(x, y, frames)
+    *** Marius Deacu
+    + drag & drop on layers tree in Explorer view
+    + Properties view: posX, posY and layer id for Dummy and Level
+
+2006.07.06 (v0.5.6)
+    |
+    *** Marius Deacu
+    + generic layers tree
+    |    * LayerGroup --> Dummy Layer
+    |    * Level is a Layer too
+    |    * any layer can have children layers
+    + save/load of .game files was modified to support the new generic layers
+    + fixed Clone on all layers
+    *** Ionut Matasaru
+    + GameExport, exporting maps and tiles:
+    |   * Tileset sprite --> Mark unused modules
+    |   * Tileset sprite --> Delete unused modules
+    + GameExport, new export maps options (for .gamecmd script):
+    |   * DONT_REMOVE_UNUSED_MODULES
+    |   * INDICES_AS_SHORT
+    |   * NO_CONV_TABLE
+    |   * ENCODE_TILE_FLAGS_I4
+    |   * ENCODE_TILESET_MASK_I16
+    + fixed export of DUMMY layers (.game)
+
+2006.06.20 (v0.5.5)
+    |
+    + fix compatibility with old version SplinterCell Extended Ops
+    + add options to relative path and absolute path for tiled and blended layer
+    *** Ionut Matasaru
+    + modified game in order to use sprite as tileset instead image
+
+2006.06.13 (v0.5.4)
+    |
+    + fix display of blended flipped tiles
+    + expand number of object atributes from 12 to 32
+    + fix game export using new flexible export
+    + fix update all path to relative path
+
+2006.06.07 (v0.5.3)
+    |
+    *** Ionel Petcu:
+    + Del --> shortcut is workin when a layer is selected using mouse in level
+    + fix refresh when deleting layer. The list is not flickering any more
+    + add an option to suppress confirmation message when deleting a layer
+
+2006.04.20 (v0.5.2)
+    |
+    + added export map option: USE_LAYER_NAMES (see docs)
+    + each object layer can have a list of points (exported by EXPORT_POINTS_XY, EXPORT_POINTS_PARAM)
+
+2006.03.17 (v0.5.1)
+    |
+    + .gamecmd -> EXPORTGAME -> generic export for a game
+    |   export filters: MAPS, STRINGS, OBJ_LAYERS, TASKS
+    |   maps options: SIZE_ON_SHORT, COLLISION
+    |   obj_layers options: EXPORT_OBJ_ID
+    |   tasks options: FINAL_OFFSET
+    + each layer has an auto generated unique ID
+    + added LINK as a new flag for OBJECT_LAYER parameters (link to another layer)
+    + edit LINK parameters with comboboxes
+
+2005.12.22 (v0.5.0)
+    |
+    + template -> SET RANGE_Y now works
+    + template -> new SET commands:
+    |   "RECT_AREA ox oy w h RGB(r, g, b)" --> draw a relative rect in a specified color
+    |   "GRID" --> enables grid draw (uses NX, NY, DX, DY)
+    + Lock X/Y axis (by Ionel Petcu)
+    + shortcut keys for layers: Del = delete, PgUp/PgDown = move up/down (by Ionel Petcu)
+    + Explorer View -> rename layer: use ESCAPE and ENTER (click outside = ESCAPE)
+    + show layer names
+    + Tools\Options... -> draw data filter by game
+
+2005.12.12 (v0.4.9)
+    |
+    + SET commands for OBJECT_LAYER templates, in .gts files (see GTS_spec.doc)
+
+2005.06.09 (v0.4.8)
+    |
+    + Vijay2006 export and debug draw layers
+    + debug draw for the "grid" template
+    + Cut/Copy/Paste/Undo for the edit box of a task script (by AMatei)
+
+2005.06.04 (v0.4.7)
+    |
+    + King Kong export and debug draw layers (by AMatei)
+    + collison TiledLayer (with alpha) (by AMatei)
+    + Task: SetObjectId() (by AMatei)
+    + Vijay2006 export
+    + auto maximize view on open
+
+2004.10.15 (v0.4.6)
+    |
+    + error reporting for paint sprites
+    + debug info for ObjectLayer "pop2_hint"
+    + debug info changed for "pop2_spawn" (crows)
+    + custom grid in the Preview Area
+
+2004.09.28 (v0.4.5)
+    |
+    + crash bugs fixed: name changed in Properties View, task ApplyAnimOff()
+
+2004.08.26 (v0.4.4)
+    |
+    + flags for each Object Layer Template parameters (X, Y, W, H)
+    + "CONFIG" parameters for Object Layer Templates
+    |   * chain: length of chain item
+    + Tools/Game Optimzation...
+    |   * Adjust(add, mul, div, filter)
+    + ...
+
+2004.07.12 (v0.4.3)
+    |
+    + added properties page for the Mobile Camera
+    + name changed: "GameEditor"
+
+2004.07.07 (v0.4.2)
+    |
+    + bug fixed: parse/edit an ObjectLayer with unknown template
+    + debug draw for new templates: trigger2, save_zone2, platform2, blades2, rock2
+    |   (platform, blades, rock templates were removed)
+    + ...
+
+2004.06.25 (v0.4.1)
+    |
+    + added new task SpriteInstance flag: LOOP_OFFSET (play anim and Apply Anim Offset at each Anim End)
+    + task properties: resize for the code edit box and for the console list box
+    + ObjectLayers: top and bottom rings for 'chain' REMOVED ! :(
+    + POPHA2 export: sky maps
+
+2004.06.22 (v0.4.0)
+    |
+    + ObjectLayers: top and bottom rings for 'chain'
+    + added debug draw for 'rock' & 'trap' template based ObjectLayers
+
+2004.06.15 (v0.3.9)
+    |
+    + Preview Area:
+    |   * select ObjectLayers with a mouse click (select mode)
+    |   * move selected ObjectLayers with the mouse
+    |   * right click (select mode) -> pan mode
+    |   * right click + shift (select mode) -> context menu
+    + bug fixed: initial panning
+    + bug fixed: when a layer is moved by keys -> the Properties View will update corectlly pos X/Y
+    + bug fixed: selection of bad sprites
+
+2004.06.15 (v0.3.8)
+    |
+    + Task: instruction set changed (not compatible with older versions)
+    |   * spr[].SetAnim()
+    |   * spr[].SetAnimEx(), spr[].SetAFrame(), spr[].ApplyAnimOff()
+    |   * system cmds changed offset
+    |   * SetAnimBase()
+    + SprInstance: ApplyAnimOff(), fixed WaitEndAnim()
+
+2004.06.14 (v0.3.7)
+    |
+    + clone for ObjectLayers
+    + debug draw of ObjectLayer based on template "chain" 
+
+2004.06.11 (v0.3.6)
+    |
+    + Level Statistics
+    |   * TiledLayers, BlendLayer, ObjectLayers (info, tiles to be cached)
+    + draw grid, draw collisions for BlendLayers
+
+2004.05.31 (v0.3.5)
+    |
+    + remember expanded items in Explorer View
+    + export tasks (POPHA2)
+    + some fixes about task editing
+
+2004.05.21 (v0.3.4)
+    |
+    + blend layer: corectly use alpha from src layers
+    + blend layer: fixed draw position
+    + blend layer: added ColorDoge2 function
+
+2004.05.20 (v0.3.3)
+    |
+    + export POPHA2
+    + fixed bug: save/load of BlendLayers
+
+2004.05.10 (v0.3.2)
+    |
+    + fixed "decor" layer (modular sprites)
+    + fixed save of object layers
+    + fixed save/parse for BlendLayer
+
+2004.05.07 (v0.3.1)
+    |
+    + Task: edit properties / preview -> cut scene editor
+    + new properties page for: CObjectLayer, CTiledLayer, CBlendLayer
+    + independent properties pages for each class of objects
+    + some bugs fixed
+
+2004.05.05 (v0.2.9)
+    |
+    + multiple edit modes (Zoom, Pan, etc.)
+    + Zoom selection, in/out
+    + Task objects for each Level (just save/parse for now)
+    + a MobileCamera for the Game (just save/parse for now)
+    + New/Delete for Level and Task objects
+
+2004.04.30 (v0.2.8)
+    |
+    + F5 = refresh (tiled layer, blend layer, tiled layer template)
+    + blend layer icons
+
+2004.04.29 (v0.2.7)
+    |
+    + blend layer (M.C.Mihet)
+
+2004.04.20 (v0.2.6)
+    |
+    + integration of SpriteEditor (modular version)
+
+====================================================================================================
+
+2003.11.06 (v0.2.5)
+    |
+    + use Left/Right/Up/Down keys to move the selected layer in the Preview Area
+        * if SHIFT   is pressed it is moved 2 times faster
+        * if CONTROL is pressed it is moved 4 times faster
+
+2003.11.06 (v0.2.4)
+    |
+    + added ZoomIn \ ZoomOut \ Zoom100% in the toolbar
+    + export SC2S60 has improved statistics in the log file
+
+2003.10.28 (v0.2.3)
+    |
+    + added draw of patrol points for "spetsnaz_door" layer
+
+2003.10.21 (v0.2.1)
+    |
+    + "thousands separator" bug fixed (Properties View)
+
+2003.10.15 (v0.2.0)
+    |
+    + bug fixed related to selection of a new item (Preview Area\right click\new layer)
+
+2003.10.14 (v0.1.9)
+    |
+    + spins for param edit fields (Properties View)
+    |   * use Up/Down/Enter keys for faster param. changing
+    + ask to save on exit
+
+2003.10.07 (v0.1.8)
+    |
+    + exports strings (SC2S60)
+    + bug fixed (scrolling in Explorer and Template Views)
+
+2003.09.30 (v0.1.7)
+    |
+    + added "bonus" layer
+
+2003.09.23 (v0.1.6)
+    |
+    + a new bug fixed related to selected item from Explorer (second level)
+    + added draw debug for "cameras", "elevators", "ray detectors", "triggers" and "save zones"
+
+2003.09.21 (v0.1.5)
+    |
+    + double click on a layer (in Explorer) will center the view on that layer
+    + a bug fixed related to selected item from Explorer
+    + "decor" object layer has new parameters
+
+2003.09.18 (v0.1.4)
+    |
+    + a few bugs fixed related to Load/ReLoad tileset (TiledLayerTemplate)
+
+2003.09.17 (v0.1.3)
+    |
+    + LayerTemplate \ ObjLayerTemplate \ TiledLayerTemplate
+
+2003.09.16 (v0.1.2)
+    |
+    + game workspace / multilevel editor
+    + tileset collision mask
+
+2003.09.15 (v0.1.1)
+    |
+    + StringsEditor
+
+2003.09.10 (v0.1.0)
+    |
+    + first beta version
+
+2003.08.28 (v0.0.1)
+    |
+    + start coding
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////

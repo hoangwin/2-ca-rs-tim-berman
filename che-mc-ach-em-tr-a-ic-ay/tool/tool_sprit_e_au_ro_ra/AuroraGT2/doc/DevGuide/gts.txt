@@ -1,0 +1,277 @@
+Limitations:
+    You need use right commands    
+You can use C++ comment style (//, /* ... */) to comment lines in the gts file.
+
+Key Words:
+///////////////////////////////////////////////////////////////////////////////////////////
+			data type
+///////////////////////////////////////////////////////////////////////////////////////////
+
+		DATA_TYPE -> define data type the same database struct
+		Syntax:
+			DATA_TYPE <TYPE> "name"
+			{  
+				[<Value1> "=" "Description1"]
+
+				[<Value2> "=" "Description2"]
+
+				...
+			}
+           <TYPE>:  LIST, TEXT_LIST,  SPRITE_LIST, STRING_LIST, LAYER_LINK, BITSET, MATRIX and ANCHOR (built-in)
+		
+		Sample:
+			DATA_TYPE LIST "HINT_TYPE"
+			{
+				0 = "Hero Touch To Draw"
+				1 = "Actor Hint(no function)"
+			}
+			Define a data type is a list with name "HINT_TYPE" . It only gets value 0 or 1 by list view on GUI
+			
+			DATA_TYPE BITSET "LIMIT_DIR"
+			{
+				0 = "LEFT"
+				1 = "TOP"
+				2 = "RIGHT"
+				3 = "BOTTOM"
+			}			
+			Define a data type is BITSET with name "LIMIT_DIR" . It can get values are combine of 0, 1 ,2 and 3 by check box on GUI
+			
+			DATA_TYPE TEXT_LIST "TEXT_FILE"
+			{
+				SET_LANG "EN"
+				TEXT_FILE "..\..\..\text\text.ods"
+			}
+			Define a data type is TEXT_LIST with name "TEXT_FILE". Support ODS(OpenOffice) or MNT(Monolith) format
+            
+			For TEXT_LIST from ODS file, here is more options command
+				SET_SHEET: use text from sheet index (ex: 1)
+				SET_LANG : uss language column (ex: "EN")
+				SET_MAXLINE: maximum text line could have for 1 sheet (ex: 2048)
+				SET_START_LIST_INDEX: if indicate use text list in one sheet, use this command to set starting index (ex: 0)
+			
+			For built-in ANCHOR, the param will use it as Aurora built-in type
+			Here's the list value for ANCHOR type:
+				DATA_TYPE LIST "System-Anchor"
+				{
+					0 = "LEFT|TOP" 
+					1 = "LEFT|VCENTER" 
+					2 = "LEFT|BOTTOM" 
+					3 = "HCENTER|TOP" 
+					4 = "HCENTER|VCENTER" 
+					5 = "HCENTER|BOTTOM" 
+					6 = "RIGHT|TOP" 
+					7 = "RIGHT|VCENTER" 
+					8 = "RIGHT|BOTTOM"			
+				}
+///////////////////////////////////////////////////////////////////////////////////////////
+			template layer
+///////////////////////////////////////////////////////////////////////////////////////////
+
+		TEMPLATE -> Define template
+        
+		Syntax:
+			TEMPLATE <LAYER_TYPE> "name"
+			{
+				<Specific to LAYER_TYPE>
+			}
+            <LAYER_TYPE>: OBJECT_LAYER, TILED_LAYER
+            
+		With LAYER_TYPE is OBJECT_LAYER
+			TEMPLATE OBJECT_LAYER "template_name"
+			{
+				ID <id_value>
+
+				// Sprites used by this template…
+				[ SPRITE "file1.sprite" ]
+				[ SPRITE "file2.sprite" ]
+				...
+
+				// SET commands…
+				[ SET <SET_CMD> <parameter[s]> ]
+				[ SET <SET_CMD> <parameter[s]> ]
+				...
+
+				// Parameters…
+				PARAMS
+				{
+					[ <default_value1> "name1" "description1" [ TYPE <"type_name"> ] 
+															  [ FLAGS { <flags> } ]
+															  [ EXPORT <export_type> ] ]
+					[ <default_value2> "name2" "description2" [ TYPE <"type_name"> ] 
+															  [ FLAGS { <flags> } ] 
+															  [ EXPORT <export_type> ] ]
+					...
+				}
+
+				// Custom export format…
+				EXPORT_FORMAT
+				{
+					[ <export_item1> <export_type> ]
+					[ <export_item2> <export_type> ]
+					 
+					...
+				}
+
+				// A list of config values…
+				CONFIG { [<values>] ... }
+			}
+            
+		Commands in Template
+			SET <SET_CMD> <parameter[s]>
+				Command								Default value				Description
+				SET SPRITE <int_or_param> 			0							sprite to be draw
+
+				SET MODULE <int_or_param>			0							module (-1 to disable -> frame) 							
+
+				SET FRAME <int_or_param>			-1							frame (-1 to disable -> aframe)
+
+				SET FMODULE <int_or_param>			-1							fmodule (-1 to disable -> frame)
+
+				SET ANIM <int_or_param>				-1							anim (-1 to disable -> null)
+
+				SET AFRAME <int_or_param>			-1							aframe (-1 to disable -> anim)
+
+				SET FLAGS <hex_or_param> <hex>		0							paint flags, <hex> is used as a mask
+
+				SET MM <int_or_param>				-1							module mapping
+
+				SET NX <int_or_param>				1							number of item on x
+					
+				SET NY <int_or_param>				1							number of item on y
+
+				SET DX <int_or_param>				0							space between items
+				
+				SET DY <int_or_param>				0							space between items
+
+				SET ANGLE <int_or_param>			0							NY items are rotated
+
+				
+				SET RANGE_X x1 x2					Disable						draw a "patrol" zone horiz./vert.
+				
+				SET RANGE_Y y1 y2					Disable						x1, x2, y1, y2 are <int_or_param>;
+				
+				SET RECT_AREA ox oy w h RGB(r, g, b) Disable					draw a relative rectangle area,
+																				in a specified color;
+																				ox, oy, w and h are <int_or_param>;
+																				r, g, b are integer values;
+				SET FILL_AREA ox oy w h RGB(r, g, b)																
+				SET GRID							Disable						draw a grid (uses NX, NY, DX, DY)
+				SET ANCHOR	PARAM[n]				Disable						param [n] is anchor type.
+
+		-Parameters…
+			<default_value1> "name1" "description1" [ TYPE <"type_name"> ] [ FLAGS { <flags> } ] [ EXPORT <export_type> ]
+
+			<default_value1> := integer value, preceded by x-, x+, y- or y+ if the default value for that parameter is relative to position of the object
+
+			<flags> := { X, Y, W, H, LINK } ? to specify what type of param is that. X, Y, W and H are used when we need to scale a level. LINK specifies that the current parameter is an ID link to another object.
+
+			<"type_name"> := the name of a type defined in a "DATA_TYPE" block, or LISTPARAM[REFERENCED_PARAM_ID]. Please see DATA_TYPE specifications.
+
+			<export_type> := one of INT8, UINT8, INT16, UINT16, INT32, UINT32, STRING -> used to specify export format for each parameter, if the PARAMS export type is set to CUSTOM (see below)
+			
+		-Export format
+			<export_item1> <export_type>
+
+			<export_item1> := one of the template members: TEMPLATE_ID, LAYER_ID, LAYER_POS_XY, NUM_PARAMS, PARAMS, NUM_POINTS, POINTS_XY, POINTS_PARAM, NUM_COMMANDS, COMMANDS, ITEM_TYPE
+			
+			<export_type> := one of CUSTOM, INT8, UINT8, INT16, UINT16, INT32, UINT32, STRING
+
+			With <export_item1> := ITEM_TYPE is used to export Type of Param or template common  variable  (template idx, layer idx, pos, ...) for ONE object layer template.
+			
+			For this section to be used by Aurora, in the OBJ_LAYERS section of the .gamecmd file, flags:
+				* USE_TEMPLATE_EXPORT_FORMAT must be defined.
+				* EXPORT_OBJ_TYPE:is used to export Type of Param or template common  variable  (template idx, layer idx, pos, ...) for ALL object layer template.
+			
+			Template members that are not specified in this section are NOT exported at all.
+		
+		Sample:
+		TEMPLATE OBJECT_LAYER "STATIC_ACTOR" //Define template is OBJECT_LAYER with name "STATIC_ACTOR"
+		{
+			ID 0 // ID of template(Required field must exist)
+			SPRITE_LIST "ALL_SPRITE"//Show list all sprite using
+			
+			SET SPRITE PARAM[0] // Get sprite depend value of param[0]
+			SET MM PARAM[1]		// Get Module mapping depend value of param[1]
+			SET ANIM PARAM[2]	//Get Anim depend value of param[2]
+			SET PALETTE PARAM[3] // Get palette depend value of param[3]
+			SET AFRAME 0		// Use AFRAME 0 for show Anim on GUI
+			SET MODULE -1		// Not use param for module
+			SET FRAME -1		//Not use param for Frame
+			SET FLAGS PARAM[4] 0x0001 // Get flags depend value of param[4]
+			// The following is the order param
+			PARAMS
+			{
+				3 "Sprite" "" TYPE "ALL_SPRITE" // argument 1: is value index sprite(default 3),argument 2: is name show GUI,argument 4,5:is case data type
+				-1 "Module Map" "Moudle Mapping" 
+				0 "Anim" "Initial animation" TYPE ANIMSDESC[PARAM[0]]
+				0 "palette" "palette"
+				0 "Actor flags" "" TYPE "ACTOR_FLAGS"
+				10 "ZOrder" "Z Order" TYPE "Z_ORDER"
+				-1 "alpha" "alpha(-1 or >=100 is normal)"// Get value is number default 1
+				100 "Zoom" "Zoom In/Out(-1 or 100 is normal)"
+				-1 "Cinematic" "link cinematic" FLAGS { LINK }//argument1: is value id of object need link,
+															//argument2:is name show GUI,
+															//argument3: option for user select case object can link
+			}
+		}
+        
+        With LAYER_TYPE is TILED_LAYER
+			Syntax:
+				TEMPLATE TILED_LAYER "name"
+				{
+					ID <id>
+					TILESET "tile"
+				}
+				
+			Sample:
+			TEMPLATE TILED_LAYER "NY_BG" // Define template is TILED_LAYER with name "NY_BG"
+			{
+				ID 1 //ID of template(Required field must exist)
+				TILESET "..\tilesets\NY_BG.sprite" //sprite content tileset
+			}
+		
+		//Note You need include FONTTABLE "..\..\common\fonts\fontTable.jpp" in TEMPLATE OBJECT_LAYER for show text in GUI
+        
+///////////////////////////////////////////////////////////////////////////////////////////
+        Command in cinematic
+//////////////////////////////////////////////////////////////////////////////////////////
+    
+	Syntax:
+		CMD <THREAD_TYPE> "command_name"
+		{
+		   
+			// Parameters of this command
+			[ PARAM <param1> TYPE "<DATA_TYPE>" ]
+			[ PARAM <param2> TYPE "<DATA_TYPE>" ]
+			...
+
+		}
+		<THREAD_TYPE> is on of: BASIC, SPRITE_INSTANCE, OBJLAYER, CAMERA
+        
+		NEW_CMD <THREAD_TYPE> "command_name"
+		{
+		   EXPORT_ID  <id>
+
+			// Parameters of this command
+			[ PARAM "<param0_name>" [ TYPE "<DATA_TYPE>" ] ]
+			[ PARAM "<param1_name>" [ TYPE "<DATA_TYPE>" ] ]
+			...
+
+		}
+		<THREAD_TYPE>: offers only BASIC
+        
+	Sample:
+		CINEMATIC_EDITOR //Editor command in cinematic
+		{
+			CMD	BASIC "SetAction"//redefine command("SetAction") exist in cinematic BASIC
+			{
+				PARAM 0 TYPE "CINEMATIC_ACTION" //edit param 0 of command "SetAction" ,values get from data type "CINEMATIC_ACTION"
+			}
+			NEW_CMD BASIC "QTE_Start"//define new command in cinematic BASIC with name is "QTE_Start"
+			{
+				EXPORT_ID 101 // this param is ID of command(Required field must exist)
+				PARAM "Key" TYPE "KEY" // "Key" is name show GUI, values get from data type "KEY"
+				PARAM "Follow" //  no limit value
+				//note the order param in command is order param in function "QTE_Start"
+			}
+		}

@@ -1,0 +1,39 @@
+<resources>
+
+    <string name="app_name">Ai Là Triệu Phú</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Ai là triệu phú</string>
+    <string name="time">time</string>
+    <string name="cauhoi">Câu hỏi</string>
+    <string name="A">A:</string>
+    <string name="B">B:</string>
+    <string name="C">C:</string>
+    <string name="D">D:</string>
+    <string name="luatchoi">Luật Chơi</string>
+    <string name="huongdan">Người chơi sẽ vượt qua 15 câu hỏi của chương trình và có 3 mốc rất quan trọng là 5, 10, 15. Có 4 sự trợ giúp cho bạn trong quá trình chơi là: 50-50, hỏi ý kiến khán giả, gọi điện cho chuyên gia, đổi câu hỏi. Bạn có thể dừng cuộc chơi và giữ phần thưởng của mình hiện có, nếu trả lời sai, phần thưởng của bạn sẽ quay lại mốc quan trọng gần nhất.</string>
+    <string name="help">add</string>
+    <string name="isready">Bạn có 15 câu hỏi trắc nghiệm
+   	    \n BẠN ĐÃ SẴN SÀNG CHƯA?</string>
+    <string name="READY">Sẵn sàng</string>
+    <string name="NOREADY">Chưa</string>
+    <string name="SETTING">Thiết lập</string>
+    <string name="SOUNDON">Âm thanh: Bật</string>
+    <string name="SOUNDOFF">Âm thanh: Tắt</string>
+    <string name="WANT_EXIT">Bạn thật sự muốn thoát?</string>
+    <string name="YES">Đúng vậy</string>
+    <string name="NO">Không phải</string>
+    <string name="FINAL_PLAN">Phương án cuối cùng của bạn là </string>
+    <string name="WANT_HELP">Bạn muốn sử dụng sự trợ giúp này?</string>
+    <string name="WANT_STOPPLAY">Bạn muốn dừng cuộc chơi tại đây?</string>
+    <string name="QUESTION_NUMBER">Câu hỏi số </string>
+    <string name="CALLHELPTITLE">Hãy lựa chọn chuyên gia bạn tin tưởng </string>
+    <string name="HELP_NGOBAOCHAU">Giáo sư Ngô Bảo Châu khuyên bạn lựa chọn đáp án </string>
+    <string name="HELP_ANHXTANH">Nhà bác học Einstein khuyên bạn lựa chọn đáp án </string>
+    <string name="HELP_LEVANLAN">"Giáo sư sử học Lê Văn Lan khuyên bạn lựa chọn đáp án </string>
+    <string name="HELP_GIACATLUONG">Gia Cát Lượng tiên sinh khuyên bạn lựa chọn đáp án </string>
+    <string name="HELP_BILLGATE">Ngài Bill Gate khuyên bạn lựa chọn đáp án </string>
+    <string name="HELP_MARK">Ông chủ Facebook Mark Zukerbeg khuyên bạn lựa chọn đáp án </string>
+    <string name="MESSAGELOADING">Chúng ta bắt đầu đi tìm Ai là Triệu Phú</string>
+
+</resources>

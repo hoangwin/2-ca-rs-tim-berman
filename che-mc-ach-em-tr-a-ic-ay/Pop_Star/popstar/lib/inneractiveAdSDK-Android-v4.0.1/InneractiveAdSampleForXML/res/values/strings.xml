@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">InneractiveAdSampleForXML</string>
+    <string name="button_text">Interstitial ad</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_inneractive_sample">InneractiveSampleActivity</string>
+    <string name="iaCloseUrl"></string>
+
+</resources>

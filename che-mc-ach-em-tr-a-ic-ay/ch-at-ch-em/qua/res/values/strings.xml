@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="hello">Chém Trái Cây</string>
+    <string name="app_name">Chém Trái Cây</string>
+    <string name="menu_exit">EXIT</string>
+</resources>

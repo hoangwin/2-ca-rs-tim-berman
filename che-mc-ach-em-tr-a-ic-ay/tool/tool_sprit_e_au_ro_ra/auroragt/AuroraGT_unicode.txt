@@ -1,0 +1,20 @@
+
+  Aurora Game Tools (GameEditor, SpriteEditor, MapEditor), by Ionut Matasaru
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+This is the unicode version. Input files will be in the unicode format (the application also knows to make the conversion).
+The save will be done in the unicode format. Exported files will keep the same format with the ANSII application.
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// History log...
+
+2007.11.13 (v0.7.9)
+    |
+    + GameEditor v0.6.8
+    + SpriteEditor v0.9.0 - TGA loading is not supported yet
+    + MapEditor v0.0.7
+

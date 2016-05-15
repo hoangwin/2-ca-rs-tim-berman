@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000"
+    android:orientation="vertical" 
+ 	android:gravity= "center_horizontal" >
+ 	
+     <!-- adding Rectangle Ad -->  
+  		 
+  		<com.inneractive.api.ads.InneractiveAd
+    	    android:id="@+id/rectad"
+    		xmlns:inneractive="http://schemas.android.com/apk/res/com.inneractive.api.ads.sampleforxml"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:gravity= "center_horizontal"
+     	    inneractive:appID="MyCompany_MyApp"
+    	    inneractive:adType="Rectangle"
+    	    inneractive:keywords="Arcade"
+     	    inneractive:refreshInterval="60" />   
+    
+
+    	<Button
+	        android:id="@+id/interstitialbtn"
+	        android:layout_width="fill_parent"
+	        android:layout_height="100px"
+	        android:text="Load Interstitial"
+	        android:onClick="onButtonClick" >
+    	</Button>
+    	
+    	
+    	
+  <com.inneractive.api.ads.InneractiveAd
+    	    android:id="@+id/bannerad"
+    		xmlns:inneractive="http://schemas.android.com/apk/res/com.inneractive.api.ads.sampleforxml"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:gravity= "center_horizontal"
+     	    inneractive:appID="MyCompany_MyApp"
+    	    inneractive:adType="Banner"
+    	    inneractive:keywords="Games"
+     	    inneractive:refreshInterval="60" /> 
+     	 
+ <!-- adding text Ad -->   
+   
+ 	<com.inneractive.api.ads.InneractiveAd
+   	    android:id="@+id/textad"
+   		xmlns:inneractive="http://schemas.android.com/apk/res/com.inneractive.api.ads.sampleforxml"
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+    	inneractive:appID="MyCompany_MyApp"
+   	    inneractive:adType="Text"
+   	    inneractive:keywords="Music,advertising"
+   	    inneractive:refreshInterval="60"
+   	    android:gravity="center_horizontal" />   
+  
+   
+    	
+</LinearLayout>

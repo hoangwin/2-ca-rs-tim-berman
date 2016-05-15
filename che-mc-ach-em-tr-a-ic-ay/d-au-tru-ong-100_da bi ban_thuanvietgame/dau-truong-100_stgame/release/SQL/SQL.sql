@@ -1,0 +1,1 @@
+INSERT INTO `b10_11763771_GameLeaderBoard`.`ArmyDefenderGame` (`UserName`, `Score`, `Level`, `Played`, `Country`) VALUES ('Hello', '1', '1', '1', 'VN');

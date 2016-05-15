@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="hello">Fish Rescue</string>
+    <string name="app_name">Fish Rescue</string>
+    <string name="menu_exit">EXIT</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="320dp"
+    android:background="@drawable/mainbackground" >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_question"
+        android:layout_alignBottom="@+id/text_question"
+        android:layout_marginLeft="35dp"
+        android:layout_toRightOf="@+id/text_question"
+        android:text="Điểm số:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/text_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/textView3"
+        android:text="1000"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button_quitgame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_resume"
+        android:layout_alignBottom="@+id/button_resume"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_marginLeft="34dp"
+        android:text="Dừng chơi" />
+
+    <TextView
+        android:id="@+id/text_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_resume"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginLeft="63dp"
+        android:text="Câu số 1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:text="Bạn đang chơi game Ai Là Triệu Phú"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/button_resume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="33dp"
+        android:layout_toLeftOf="@+id/button_quitgame"
+        android:text="Chơi tiếp" />
+    
+</RelativeLayout>

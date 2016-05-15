@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">InMobiAndroidSDKSampleApp</string>
+	<string name="Refresh_Ad">Refresh Ad</string>
+	<string name="InterstitialAd">Interstitial Ad: </string>
+	<string name="getInterstitial">Get Interstitial Ad</string>
+	<string name="showInterstitial">Show Interstitial Ad</string>
+	
+</resources>

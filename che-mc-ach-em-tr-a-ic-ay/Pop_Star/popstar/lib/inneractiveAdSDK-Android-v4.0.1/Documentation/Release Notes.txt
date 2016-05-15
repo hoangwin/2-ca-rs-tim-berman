@@ -1,0 +1,19 @@
+Release Notes
+=============
+
+InneractiveAdSDK-Android-v4.0.1
+- Release date: 4/23/2013
+- Supports Android 2.2 and newer
+- Additional Rectangle type (300x250)
+- Required and Optional ad sizes are available for interstitial as well (effects on the banner's size within the interstitial)
+- Bug fix for rich media ads on Android 4.0.3 and 2.3.4
+- refresh bug fixes
+- READ_PHONE_STATE is recomended but not mandatory
+- Default alignment is CENTER instead of TOP_LEFT
+- Banner display improvement
+- Bug fix for API 17 +
+- HTML5 player support - Beta
+
+
+
+ 

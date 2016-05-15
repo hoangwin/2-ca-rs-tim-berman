@@ -1,0 +1,9 @@
+AuroraHD: offer new support for HD-2D game development:
+    -Free scale or rotate on frame/anim
+    -Interpolation on Animation layers
+    -2D view on 3Dmode (OpenGL)
+    -flash-liked features 
+    ...
+    
+We keep both AuroraGT (aka SD) and AuroraHD releases in same trunk in order to avoid conflicting some existing features on the SD.
+Certainly the HD side will be sync frequently.

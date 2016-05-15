@@ -1,0 +1,686 @@
+AuroraGT can run commands from a script file.
+The file must have extension (".sprcmd") and must be specified between quotation marks.
+Use: AuroraGT.exe "file.sprcmd"
+or from IDE: File\Run... -> choose "file.sprcmd" to be run
+
+With sprite commands you can load a sprite, add/set multiple palettes and
+export into a binary format with different parameters.
+The export file is a .bsprite v3 file (see bsprite.txt).
+Limitations:
+    The sprite must use only one image.
+    (it can work with multiple images, but was not tested and it is not guaranteed to work properly)
+    The image used must be indexed, 8bpp, non compressed.
+You can use C++ comment style (//, /* ... */) to comment lines in the script file.
+
+----------------------------------------------------------------------------------------------------
+Commands:
+
+	--------------------------------------------------
+    + Load("path\in_file.sprite")
+        -> loads a sprite from a file
+        * "path\in_file.sprite"
+            -> input .sprite file
+
+    --------------------------------------------------
+    + Save("path\out_file.sprite")
+        -> saves a sprite to a file
+        * "path\out_file.sprite"
+            -> output .sprite file
+	
+	--------------------------------------------------
+    + SetImageFile(image, "image_file")
+        -> modifies the image file name for a certain image
+        * image
+            -> image index
+        * "image_file"
+            -> the new file name to be set for the image
+
+    --------------------------------------------------
+    + SaveImage(image, file [, bSetImage])
+        -> save an image to a file
+        * image
+            -> image index
+        * "image_file"
+            -> the new file name to be set for the image
+        * image
+            -> image index
+        * bSetImage
+            -> TRUE or FALSE
+            -> default value is TRUE
+            -> modifies the image file name
+			
+	--------------------------------------------------
+    + SetGlobalBSpriteFlags(flags)
+        -> set the global BSprite flags, used by ExportBSpriteEx
+        -> default value is 0
+        * flags
+            -> same as in ExportBSpriteEx
+			
+	--------------------------------------------------
+	+ ReuseModules()
+		-> reuse modules by using transform flags
+	
+	--------------------------------------------------
+	+ ExpandHyperFrames()
+		-> expand all hyper frames.
+		
+	--------------------------------------------------
+    + ExportBSpriteEx("path\out_file.bsprite", flags, encode, pixelformat)
+        -> exports the loaded sprite to a file (binary format)
+        * "path\out_file.bsprite"
+            -> output .bsprite file
+        * flags
+            -> filter flags for export
+            -> one or more of the following flags (separated by "|"):
+                GLOBAL = global flags value (set with SetGlobalBSpriteFlags())
+                BS_MODULES            	-> export modules
+					BS_MODULES_XY       -> export PosX/PosY for each module
+					BS_MODULES_XY_SHORT -> export PosX/PosY for each module as short
+					BS_MODULES_WH_SHORT	-> export module size: width and height as short
+					BS_MODULES_IMG      -> export image index for each module
+					BS_MODULES_USAGE    -> export for each module which transformations are used in the sprite
+                BS_FRAMES             	-> export frames
+					BS_NO_FM_START      -> do not export start of FModules
+					BS_FM_OFF_SHORT     -> export fm offsets as shorts
+					BS_NFM_1_BYTE       -> export nfm as byte
+					BS_SKIP_FRAME_RC    -> do not export frame bounding box
+					BS_FRAME_COLL_RC    -> export first frame rect
+					BS_FM_PALETTE       -> export palette used by the module
+					BS_FRAME_RECTS      -> export frame rects
+                BS_ANIMS              	-> export animations
+					BS_NO_AF_START      -> do not export start of AFrames
+					BS_AF_OFF_SHORT     -> export af offsets as shorts
+					BS_NAF_1_BYTE       -> export naf as byte
+                BS_MODULE_IMAGES      	-> export encoded images for each module
+				BS_SINGLE_IMAGE       	-> export sprite image as an PNG with CRCs for each palette
+				BS_MODULE_IMAGES_USED	-> export encoded images for specific modules (filtered by SetGlobalModuleUsageFlags)
+				BS_MODULE_IMAGES_TC_BMP	-> export module image in bmp true color format
+					BS_MD_5_BYTES       -> export non MD_IMAGE modules (MD_RECT, MD_FILL_RECT) encoded on 1 + 4 bytes (type + color)
+					BS_MODULE_IMAGES_FX -> export encoded images for each module (flipped horizontally)
+					BS_MULTIPLE_IMAGES  -> export sprite that contain multiple images with palette for each image
+					BS_GIF_HEADER       -> export gif header instead of palette
+					BS_PNG_CRC          -> export PNG additional info (CRCs) for each module
+					BS_KEEP_PAL         -> keep original palette (do not optimize colors)
+					BS_TRANSP_FIRST     -> move transparency as the first color(s)
+					BS_TRANSP_LAST      -> move transparency as the last color(s)
+					BS_IMAGE_SIZE_INT	-> export image size as 4 bytes 
+					
+                BS_DEFAULT_DOJA   = BS_MODULES | BS_FRAMES | BS_ANIMS
+                BS_DEFAULT_MIDP2  = BS_MODULES | BS_FRAMES | BS_ANIMS | BS_MODULE_IMAGES
+                BS_DEFAULT_NOKIA  = BS_DEFAULT_MIDP2
+                BS_DEFAULT_MIDP1  = BS_MODULES | BS_MODULES_XY | BS_FRAMES | BS_ANIMS
+                BS_DEFAULT_MIDP1b = BS_MODULES | BS_FRAMES | BS_ANIMS | BS_MODULE_IMAGES | BS_PNG_CRC
+        * encode
+            -> encoding of images for each module
+            -> one of: (//! -> do not work)
+                I2      - maximum   2 colors (indexed), packed data 8 pixels / 1 byte  (1 bit /pixel)
+                I4      - maximum   4 colors (indexed), packed data 4 pixels / 1 byte  (2 bits/pixel)
+            //! I8      - maximum   8 colors (indexed), packed data 8 pixels / 3 bytes (3 bits/pixel)
+                I16     - maximum  16 colors (indexed), packed data 2 pixels / 1 byte  (4 bits/pixel)
+            //! I32     - maximum  32 colors (indexed), packed data 8 pixels / 5 bytes (5 bits/pixel)
+            //! I64     - maximum  64 colors (indexed), packed data 4 pixels / 3 bytes (6 bits/pixel)
+            //! I128    - maximum 128 colors (indexed), packed data 8 pixels / 7 bytes (7 bits/pixel)
+                I256    - maximum 256 colors (indexed), raw data    1 pixel  / 1 byte  (8 bits/pixel)
+                I64RLE  - maximum  64 colors (indexed), compressed data (RLE)
+                I127RLE - maximum 127 colors (indexed), compressed data (RLE)
+                I256RLE - maximum 256 colors (indexed), compressed data (RLE)
+				A256I64RLE 	- full alpha channel, maximum  64 colors (indexed), compressed data (RLE)
+				A256I127RLE - full alpha channel, maximum 127 colors (indexed), compressed data (RLE)
+                A256I256RLE - full alpha channel, maximum 256 colors (indexed), compressed data (RLE)
+                RAW     - non indexed, raw format
+                GIF     - encoded gif data for DOJA
+            //! AUTO    - auto choose the best encode
+                NULL    - if BS_MODULE_IMAGES is not used
+        * pixelformat
+            -> format of pixels for palettes
+            -> one of:
+                _8888   - A8 R8 G8 B8   4 bytes/color
+                _F888   - X8 R8 G8 B8   4 bytes/color (no alpha)
+                _0888   - R8 G8 B8      3 bytes/color
+                _4444   - A4 R4 G4 B4   2 bytes/color
+                _F444   - X4 R4 G4 B4   2 bytes/color (no alpha)
+                _1555   - R5 G6 B5      2 bytes/color
+                _F555   - R5 G6 B5      2 bytes/color (no alpha)
+                _0565   - R5 G6 B5      2 bytes/color
+                _0332   - R3 G3 B2      1 byte/color
+                NULL    - if BS_MODULE_IMAGES is not used
+
+    --------------------------------------------------
+    + ExportBSprite("path\out_file.bsprite", encode, pixelformat)
+        -> exports the loaded sprite to a file (binary format)
+        -> the default flag is BS_DEFAULT_MIDP2
+        * parameters are the same as ExportBSpriteEx
+	
+	--------------------------------------------------
+	+ FFT_SetDataFormat(encode)
+		-> set data format of module image in FFT exporting.
+		* encode: one of
+			    I2      - maximum   2 colors (indexed), packed data 8 pixels / 1 byte  (1 bit /pixel)
+                I4      - maximum   4 colors (indexed), packed data 4 pixels / 1 byte  (2 bits/pixel)
+                I16     - maximum  16 colors (indexed), packed data 2 pixels / 1 byte  (4 bits/pixel)
+                I256    - maximum 256 colors (indexed), raw data    1 pixel  / 1 byte  (8 bits/pixel)
+                I64RLE  - maximum  64 colors (indexed), compressed data (RLE)
+                I127RLE - maximum 127 colors (indexed), compressed data (RLE)
+                I256RLE - maximum 256 colors (indexed), compressed data (RLE)
+				A256I64RLE 	- full alpha channel, maximum  64 colors (indexed), compressed data (RLE)
+				A256I127RLE - full alpha channel, maximum 127 colors (indexed), compressed data (RLE)
+                A256I256RLE - full alpha channel, maximum 256 colors (indexed), compressed data (RLE)
+                RAW     - non indexed, raw format
+                GIF     - encoded gif data for DOJA
+	
+	--------------------------------------------------
+	+ FFT_SetPixelFormat(pixelformat)
+		-> set pixel format in FFT exporting.
+		* pixelformat: one of
+				_8888   - A8 R8 G8 B8   4 bytes/color
+                _F888   - X8 R8 G8 B8   4 bytes/color (no alpha)
+                _0888   - R8 G8 B8      3 bytes/color
+                _4444   - A4 R4 G4 B4   2 bytes/color
+                _F444   - X4 R4 G4 B4   2 bytes/color (no alpha)
+                _1555   - R5 G6 B5      2 bytes/color
+                _F555   - R5 G6 B5      2 bytes/color (no alpha)
+                _0565   - R5 G6 B5      2 bytes/color
+                _0332   - R3 G3 B2      1 byte/color
+         
+	--------------------------------------------------
+    + InitBSpriteFFT("file.fft", <options>)
+		-> init file format template
+		* "file.fft": the text file which define a format of output binary.
+		* <options>:
+			- WRITE_LOG -> enable debug options to investigate that the script is corectly loaded
+
+    --------------------------------------------------
+    + ExportBSpriteFFT("file.bin", <options>)
+		-> export sprite to binary with current file format template
+		* "file.bin": output file
+		* <options>:
+			- APPEND -> append output data to exist file ("file.bin")
+			- WRITE_LOG -> enable debug options to investigate that the data are corectly exported
+	
+	
+	--------------------------------------------------
+    + LoadPalette(image, palette, "file.act" or "IMAGE")
+        -> loads a palette from a file
+        * image
+            -> image index
+        * palette
+            -> palette index -> multiple palettes
+        * "file.act" or "IMAGE"
+            -> palette file
+            -> must be a valid .act file exported by Photoshop or "IMAGE"
+            -> if "IMAGE" -> the palette will be copied from the image
+        Note: The sprite must use only .bmp files (8bpp, non compressed).
+              Do not use .png, because the colors are scrambled.
+	
+	--------------------------------------------------
+    + SetPalette(image, palette, { 0xAARRGGBB ... })
+        -> modify a palette with hex codes of colors
+        * image
+            -> image index
+        * palette
+            -> palette index -> multiple palettes
+        * { 0xAARRGGBB ... }
+            -> hex codes for each color
+            -> colors must be specified between "{" and "}"
+            -> the order must match the bitmap
+
+    --------------------------------------------------
+    + SetPaletteColor(image, palette, color_index, mask, color)
+        -> modify a color from a palette
+        Images[image].Palettes[palette].Colors[color_index] &= ~mask;
+        Images[image].Palettes[palette].Colors[color_index] |= (mask & color);
+        * image
+            -> image index
+        * palette
+            -> palette index -> multiple palettes
+        * color_index
+            -> index of the color in palette
+        * mask
+            -> hex mask to specify what bits are modified
+        * color
+            -> the new color value
+
+    --------------------------------------------------
+    + SpriteAdjust(add, mul, div, flags)
+        -> adjust sprite params as: new_value = (old_value + add) * mul + div
+        * add, mul, div
+            -> integers used in above formula
+        * flags
+            -> one of:
+                SPRITE_M_X      - module x
+                SPRITE_M_Y      - module y
+                SPRITE_M_W      - module width
+                SPRITE_M_H      - module height
+                SPRITE_F_RX     - frame rect x
+                SPRITE_F_RY     - frame rect y
+                SPRITE_F_RW     - frame rect width
+                SPRITE_F_RH     - frame rect height
+                SPRITE_FM_OX    - fmodule ox
+                SPRITE_FM_OY    - fmodule oy
+                SPRITE_AF_OX    - aframe ox
+                SPRITE_AF_OY    - aframe oy
+
+    --------------------------------------------------
+    + RearrangeModules(rearrange_type, sx, sy, bx, by, cx, cy, mx, my, max_solution, max_time [, FIXED_SIZE] [, image_id])
+		-> rearrange module images
+		* rearrange_type: one of the following types.
+			- HORIZONTALLY
+			- VERTICALLY 
+			- MINIMAL_AREA
+			- BASED_ON_MASTER_FRAMES
+			- INSERT_ALL_MODULES_INTO_ONE_SINGLE_IMAGE
+			- CREATE_MULTIPLE_IMAGES
+		* sx: space between modules	(x direction)		
+		* sy: space between modules (y direction)
+		* bx: size of border around image
+		* by: size of border around image
+		* cx: grid cell width (0 = variable)
+		* cy: grid cell height (0 = variable)
+		* mx: maximum image width (0 = unlimited)
+		* my: maximum image height (0 = unlimited)
+		* max_solution: max solution for MINIMAL_AREA rearrange type
+		* max_time: max time for MINIMAL_AREA rearrange type
+		* FIXED_SIZE: don't change size of original image
+		* image_id: image id of the image which will be rearranged (-1 or not defined = all image)
+
+    --------------------------------------------------
+    + CloneModules(action, target, filter, option)
+		-> clone module, clone and update image or show modules stats
+		* action:
+			- ACTION_SHOW_STATS
+			- ACTION_CLONE
+			- ACTION_CLONE_AND_UPDATE
+		* target:
+			- TARGET_FX
+			- TARGET_FY
+			- TARGET_ROT
+			- NOTUSED
+		* filter: in hex format, filter fmodule flags
+		* option:
+			- OPTION_USED_BY_FRAMES
+			- OPTION_USED_BY_HYPERFRAMES
+			- OPTION_USED_BY_ANIMS
+			- OPTION_TEST_MMAPPINGS
+			- NOTUSED
+
+    --------------------------------------------------
+    + CloneFrames(action, target, filter, option)
+		-> clone frame or show frame stats
+		* action:
+			- ACTION_SHOW_STATS
+			- ACTION_CLONE
+			- ACTION_CLONE_AND_UPDATE
+		* target:
+			- TARGET_FX
+			- TARGET_FY
+			- TARGET_ROT
+			- NOTUSED
+		* filter: in hex format, filter aframe flags
+		* option:
+			- OPTION_USED_BY_HYPERFRAMES
+			- OPTION_USED_BY_ANIMS
+			- NOTUSED
+			
+    --------------------------------------------------
+    + SetGlobalModuleUsageFlags(flags)
+		-> set module usage flag (use with BS_MODULES_USAGE or BS_MODULE_IMAGES_USED)
+		* flags: hex value or following keywords
+			- NULL
+			- GLOBAL
+			- OPTION_USED_BY_FRAMES
+			- OPTION_USED_BY_HYPERFRAMES
+			- OPTION_USED_BY_ANIMS
+			- OPTION_TEST_MMAPPINGS
+			
+	--------------------------------------------------
+    + ExportImages("path\out_file.txt", flags, module_image_format, frame_image_format, anim_image_format)
+        -> exports images for the the loaded sprite
+        * "path\out_file.txt"
+            -> output .txt file
+        * flags
+            -> filter flags for export
+            -> one or more of the following flags (separated by "|"):
+                IE_IMG_MODULE               -> export images for each module
+                IE_IMG_FRAME                -> export images for each frame
+                IE_IMG_ANIMATION            -> export images for each animation
+                IE_DOJA_MODULES             -> use the doja format for the image file names
+                IE_ONLY_USED_MODULES        -> export images only for the modules that are used
+        * module_image_format
+            -> specifies the image file format for the modules
+            -> one of the following formats:
+                IMAGE_FORMAT_BMP            -> module image is saved as a .bmp
+                IMAGE_FORMAT_PNG            -> module image is saved as a .png
+                IMAGE_FORMAT_GIF            -> module image is saved as a .gif
+                IMAGE_FORMAT_JPG            -> module image is saved as a .jpg
+                IMAGE_FORMAT_TIF            -> module image is saved as a .tif
+                NOTUSED                     -> this parameter MUST be used when IE_IMG_MODULE is not added to the flags parameter
+        * frame_image_format
+            -> specifies the image file format for the frames
+            -> one of the following formats:
+                IMAGE_FORMAT_BMP            -> frame image is saved as a .bmp
+                IMAGE_FORMAT_PNG            -> frame image is saved as a .png
+                IMAGE_FORMAT_GIF            -> frame image is saved as a .gif
+                IMAGE_FORMAT_JPG            -> frame image is saved as a .jpg
+                IMAGE_FORMAT_TIF            -> frame image is saved as a .tif
+                NOTUSED                     -> this parameter MUST be used when IE_IMG_FRAME is not added to the flags parameter
+        * anim_image_format
+            -> specifies the image file format for the anims
+            -> one of the following formats:
+                IMAGE_FORMAT_GIF            -> animation is saved as a .gif
+                IMAGE_FORMAT_WMV            -> animation is saved as a movie .wmv
+                NOTUSED                     -> this parameter MUST be used when IE_IMG_ANIMATION is not added to the flags parameter
+
+	
+	--------------------------------------------------
+    + DeleteAllModules()
+		-> delete all modules from curent sprite
+
+    --------------------------------------------------
+    + DeleteAllFrames()
+		-> delete all frames from curent sprite
+	
+    --------------------------------------------------
+    + DeleteAllAnims()
+		-> delete all anims from curent sprite
+
+    --------------------------------------------------
+    + DeleteAllImages()
+		-> delete all images from curent sprite
+
+    --------------------------------------------------
+    + DeleteAllMMappings()
+		-> delete all mmappings from curent sprite
+	
+	--------------------------------------------------
+    + DeleteAllTilesets()
+		-> delete all tilesets from curent sprite
+	
+	--------------------------------------------------
+    + DeleteAllPalettes()
+		-> delete all palettes from curent sprite
+	
+	--------------------------------------------------
+    + CreateModule(id, module_type, image_nr, x, y, width, height)
+		-> create new module
+		* id: module id (hex)
+		* module_type: one of
+			- IMAGE
+			- RECT
+			- FILL_RECT
+			- ARC
+			- FILL_ARC
+			- MARKER
+			- TRIANGLE
+			- FILL_TRIANGLE
+		* image_nr: image index
+		* x:
+		* y:
+		* width: 
+		* height:
+
+	--------------------------------------------------
+    + ExportModulesID("export_file", "prefix", <options>)
+		-> export module id as c++ #define
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+
+    --------------------------------------------------
+    + ExportFramesID("export_file", "prefix", <options>)
+		-> export frame id as c++ #define
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+
+	--------------------------------------------------
+    + ExportFramesSize("export_file", "prefix", <options>)
+		-> export frame size as c++ define
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+			
+    --------------------------------------------------
+    + ExportAnimsID("export_file", "prefix", <options>)
+		-> export anim id as c++ #define
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+			
+	--------------------------------------------------
+	+ ExportAFramesNum("export_file", "prefix", <options>)
+		-> export aframes number of each anim as c++ #define
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+		
+		
+	--------------------------------------------------
+    + JavaExportModulesID("export_file", "prefix", <options>) 
+		-> export module id as java interface
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+
+    --------------------------------------------------
+    + JavaExportFramesID("export_file", "prefix", <options>)
+		-> export frame id as java interface
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+	
+	--------------------------------------------------
+    + JavaExportFramesSize("export_file", "prefix", <options>)
+		-> export frame size as java interface
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+
+    --------------------------------------------------
+    + JavaExportAnimsID("export_file", "prefix", <options>)
+		-> export anim id as java interface
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+    
+	--------------------------------------------------
+	+ JavaExportAFramesNum("export_file", "prefix", <options>)
+		-> export aframes number of each anim as java interface
+		* "export_file": output file name
+		* "prefix" -> the string that is concatenated with desc
+		* options:
+	        CREATE -> create a new file where to export
+	        APPEND -> append on existing file
+	        TOUPPER -> convert prefix and module desc to uppercase
+	        TOLOWER -> convert prefix and module desc to lowercase
+
+	--------------------------------------------------
+    + JavaCreateInterface("export_file", "interface_name")
+		-> create new java interface
+    --------------------------------------------------
+    + JavaCloseInterface("export_file")
+		-> close the current java interface
+		
+    --------------------------------------------------
+    + SetDebugModeFlags(flags)
+        * flags: one of:
+			BS_DEBUG_GIF_LOG  -> make one gif file from every module of tmhe sprite
+			BS_DEBUG_PNG_LOG  ->  make png for all modules from the sprite
+
+    --------------------------------------------------
+	+ SmartDivideModule(module_index, max_module)
+		-> smart divide a module to two or more modules (max = "max_module")
+		* module_index: module to divide
+		* max_module: the max number of new modules
+		
+	--------------------------------------------------
+	+ SplitModuleH(module_index, cut_pos)
+		-> split module horizontally
+		* module_index: module to split
+		* cut_pos: split position
+	
+	--------------------------------------------------
+	+ SplitModuleV(module_index, cut_pos)
+		-> split module vertically
+		* module_index: module to split
+		* cut_pos: split position
+	
+	--------------------------------------------------
+	+ ExportModuleMappings("file.bin")
+		-> export module mapping to binary
+		* "file.bin": output file
+	
+	--------------------------------------------------
+	+ BestFitAllModules()
+		-> best fit all module
+	
+	--------------------------------------------------
+	+ MakeModulesFromFrames()
+		-> make modules from frames
+	
+	--------------------------------------------------
+	+ ExportBSpriteExtraFlags("path\out_file.bsprite", flags, extra_flags, encode, pixelformat)
+		-> exports the loaded sprite to bsprite with extra_flags
+        * "path\out_file.bsprite"
+            -> output .bsprite file
+        * flags
+            -> filter flags for export
+            -> one or more of the following flags (separated by "|"):
+                GLOBAL = global flags value (set with SetGlobalBSpriteFlags())
+                BS_MODULES            	-> export modules
+					BS_MODULES_XY       -> export PosX/PosY for each module
+					BS_MODULES_XY_SHORT -> export PosX/PosY for each module as short
+					BS_MODULES_WH_SHORT	-> export module size: width and height as short
+					BS_MODULES_IMG      -> export image index for each module
+					BS_MODULES_USAGE    -> export for each module which transformations are used in the sprite
+                BS_FRAMES             	-> export frames
+					BS_NO_FM_START      -> do not export start of FModules
+					BS_FM_OFF_SHORT     -> export fm offsets as shorts
+					BS_NFM_1_BYTE       -> export nfm as byte
+					BS_SKIP_FRAME_RC    -> do not export frame bounding box
+					BS_FRAME_COLL_RC    -> export first frame rect
+					BS_FM_PALETTE       -> export palette used by the module
+					BS_FRAME_RECTS      -> export frame rects
+                BS_ANIMS              	-> export animations
+					BS_NO_AF_START      -> do not export start of AFrames
+					BS_AF_OFF_SHORT     -> export af offsets as shorts
+					BS_NAF_1_BYTE       -> export naf as byte
+                BS_MODULE_IMAGES      	-> export encoded images for each module
+				BS_SINGLE_IMAGE       	-> export sprite image as an PNG with CRCs for each palette
+				BS_MODULE_IMAGES_USED	-> export encoded images for specific modules (filtered by SetGlobalModuleUsageFlags)
+				BS_MODULE_IMAGES_TC_BMP	-> export module image in bmp true color format
+					BS_MD_5_BYTES       -> export non MD_IMAGE modules (MD_RECT, MD_FILL_RECT) encoded on 1 + 4 bytes (type + color)
+					BS_MODULE_IMAGES_FX -> export encoded images for each module (flipped horizontally)
+					BS_MULTIPLE_IMAGES  -> export sprite that contain multiple images with palette for each image
+					BS_GIF_HEADER       -> export gif header instead of palette
+					BS_PNG_CRC          -> export PNG additional info (CRCs) for each module
+					BS_KEEP_PAL         -> keep original palette (do not optimize colors)
+					BS_TRANSP_FIRST     -> move transparency as the first color(s)
+					BS_TRANSP_LAST      -> move transparency as the last color(s)
+					BS_IMAGE_SIZE_INT	-> export image size as 4 bytes 
+					
+                BS_DEFAULT_DOJA   = BS_MODULES | BS_FRAMES | BS_ANIMS
+                BS_DEFAULT_MIDP2  = BS_MODULES | BS_FRAMES | BS_ANIMS | BS_MODULE_IMAGES
+                BS_DEFAULT_NOKIA  = BS_DEFAULT_MIDP2
+                BS_DEFAULT_MIDP1  = BS_MODULES | BS_MODULES_XY | BS_FRAMES | BS_ANIMS
+                BS_DEFAULT_MIDP1b = BS_MODULES | BS_FRAMES | BS_ANIMS | BS_MODULE_IMAGES | BS_PNG_CRC
+		* extra_flags:
+			-> filter flags for export
+            -> one or more of the following flags (separated by "|"):
+				NULL
+				BS_FM_FREE_ROTATE_SCALE
+				BS_AF_FREE_ROTATE_SCALE
+				BS_MULTIPAL_IMAGE
+        * encode
+            -> encoding of images for each module
+            -> one of: (//! -> do not work)
+                I2      - maximum   2 colors (indexed), packed data 8 pixels / 1 byte  (1 bit /pixel)
+                I4      - maximum   4 colors (indexed), packed data 4 pixels / 1 byte  (2 bits/pixel)
+                I16     - maximum  16 colors (indexed), packed data 2 pixels / 1 byte  (4 bits/pixel)
+                I256    - maximum 256 colors (indexed), raw data    1 pixel  / 1 byte  (8 bits/pixel)
+                I64RLE  - maximum  64 colors (indexed), compressed data (RLE)
+                I127RLE - maximum 127 colors (indexed), compressed data (RLE)
+                I256RLE - maximum 256 colors (indexed), compressed data (RLE)
+				A256I64RLE 	- full alpha channel, maximum  64 colors (indexed), compressed data (RLE)
+				A256I127RLE - full alpha channel, maximum 127 colors (indexed), compressed data (RLE)
+                A256I256RLE - full alpha channel, maximum 256 colors (indexed), compressed data (RLE)
+                RAW     - non indexed, raw format
+                GIF     - encoded gif data for DOJA
+                NULL    - if BS_MODULE_IMAGES is not used
+        * pixelformat
+            -> format of pixels for palettes
+            -> one of:
+                _8888   - A8 R8 G8 B8   4 bytes/color
+                _F888   - X8 R8 G8 B8   4 bytes/color (no alpha)
+                _0888   - R8 G8 B8      3 bytes/color
+                _4444   - A4 R4 G4 B4   2 bytes/color
+                _F444   - X4 R4 G4 B4   2 bytes/color (no alpha)
+                _1555   - R5 G6 B5      2 bytes/color
+                _F555   - R5 G6 B5      2 bytes/color (no alpha)
+                _0565   - R5 G6 B5      2 bytes/color
+                _0332   - R3 G3 B2      1 byte/color
+                NULL    - if BS_MODULE_IMAGES is not used
+	
+
+----------------------------------------------------------------------------------------------------
+Sample:
+
+    SetGlobalBSpriteFlags(BS_DEFAULT_MIDP2 | BS_NFM_1_BYTE | BS_SKIP_FRAME_RC | BS_NAF_1_BYTE)
+    Load("fonts\font04.sprite")
+        //      image pal {   transp     color      outline  }
+        SetPalette(0,  0, { 0x00000000 0xFFFFFFFF 0xFF000000 }) // PAL_DEFAULT
+        SetPalette(0,  1, { 0x00000000 0xFF6DBAE6 0xFF000000 })
+        SetPalette(0,  2, { 0x00000000 0xFF6DBAE6 0xFF000000 })
+        SetPalette(0,  3, { 0x00000000 0xFFFFFFFF 0xFF000000 }) // PAL_KEY_HINTS
+        ExportBSprite("fontS.bsprite", I4, _8888)
+    Load("logo.sprite")
+        LoadPalette(0, 0, "IMAGE") // keeps the palette from the image as first palette
+        LoadPalette(0, 1, "logo_bw.act") // set a black/white palette as second
+        ExportBSprite("logo.bsprite", I16, _8888)
+        ExportBSprite("logo_rle.bsprite", I127RLE, _8888)
+    Load("anim.sprite")
+        ExportBSpriteEx("anim_test1.bsprite", BS_MODULES | BS_FRAMES | BS_ANIMS, NULL, NULL)
+        ExportBSpriteEx("anim_test2.bsprite", BS_DEFAULT_NOKIA, I16, _4444)
+        ExportBSpriteEx("anim_test3.bsprite", GLOBAL, I256RLE, _0565)
+    InitBSpriteFFT("bsprite_v2.fft")
+    Load("interface.sprite")
+        ExportBSpriteFFT("interfaceff.bsprite")
+    //  ExportBSpriteFFT("interfaceff.bsprite", WRITE_LOG)
+
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------

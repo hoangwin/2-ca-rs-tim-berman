@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- while click -->
+    <item
+        android:state_enabled="false"
+        android:drawable="@drawable/rating_press" />
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/rating_press" />
+    
+     <!-- before click -->
+    <item
+        android:state_focused="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/rating" />
+    <item
+        android:state_enabled="true"
+        android:drawable="@drawable/rating" />
+
+</selector>

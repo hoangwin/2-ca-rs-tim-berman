@@ -1,0 +1,598 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// BSprite v5  - Binary Sprite file format
+//
+//  History:
+//      2005.06.04, added BS_NAF_1_BYTE
+//      2005.06.20, added MD_RECT & MD_FILL_RECT
+//      2005.09.19, added: color format _1555, _0565; data format I256RLE
+//      2005.09.28, added BS_MODULES_IMG, BS_NFM_1_BYTE, BS_SKIP_FRAME_RC
+//      2005.12.15, added BS_FRAME_COLL_RC
+//      2006.03.15, added BS_FM_PALETTE, BS_SINGLE_IMAGE
+//      2006.03.17, added BS_NO_FM_START, BS_NO_AF_START
+//      2006.07.11, added BS_FRAME_RECTS
+//      2006.08.04, added BS_GIF_HEADER, BS_MODULE_IMAGES_FX, BS_MULTIPLE_IMAGES
+//      2006.08.28, added BS_MD_5_BYTES
+//	    2008.01.24, change bsprite the export, and change the bsprite version to V5
+//      2008.09.05, added A256I64RLE, A256I127RLE, A256I256RLE data format 
+//      2009.09.12, added A256I256 data for mat
+//      2009.10.01, added A256I64, A256I128 data format. 
+//      2009.10.05, correct A32I8, A8I32 data format.  
+//      2009.11.04, removed BS_NAF_1_BYTE and BS_NFM_1_BYTE. Replace by BS_NFM_SHORT and BS_NAF_SHORT
+//
+//    * flexible file format
+//    * multiple palettes
+//    * all modules share the same palette(s)
+//    * modular frames
+//    * animations
+//    * up to 1024 modules
+//    * up to 1024 frames
+//    * up to 65536 modules
+//    * up to 65536 frames
+//    * up to 65536 anims      
+//
+//    * color formats:
+//          _8888       A8 R8 G8 B8     4 bytes/color
+//          _0888       R8 G8 B8        3 bytes/color
+//          _4444       A4 R4 G4 B4     2 bytes/color
+//          _1555       A1 R5 G5 B5     2 bytes/color
+//          _0565       R5 G6 B5        2 bytes/color
+//          _0332       R3 G3 B2        1 byte/color
+//
+//    * data formats:
+//          I2          maximum   2 colors (indexed), packed data 8 pixels / 1 byte  (1 bit /pixel)
+//          I4          maximum   4 colors (indexed), packed data 4 pixels / 1 byte  (2 bits/pixel)
+//      //  I8          maximum   8 colors (indexed), packed data 8 pixels / 3 bytes (3 bits/pixel)
+//          I16         maximum  16 colors (indexed), packed data 2 pixels / 1 byte  (4 bits/pixel)
+//      //  I32         maximum  32 colors (indexed), packed data 8 pixels / 5 bytes (5 bits/pixel)
+//      //  I64         maximum  64 colors (indexed), packed data 4 pixels / 3 bytes (6 bits/pixel)
+//      //  I128        maximum 128 colors (indexed), packed data 8 pixels / 7 bytes (7 bits/pixel)
+//          I256        maximum 256 colors (indexed), raw data    1 pixel  / 1 byte  (8 bits/pixel)
+//          I64RLE      maximum  64 colors (indexed), compressed data (RLE)
+//          I127RLE     maximum 127 colors (indexed), compressed data (RLE)
+//          I256RLE     maximum 256 colors (indexed), compressed data (RLE)
+//          A256I63RLE     maximum 256 colors (indexed), compressed data (RLE) have alpha channel
+//          A256I127RLE     maximum 256 colors (indexed), compressed data (RLE) have alpha channel
+//          A256I256RLE     maximum 256 colors (indexed), compressed data (RLE) have alpha channel
+//          A32I8           maximum 8 colors (indexed), 5 bits for alpha channel and 3 bits for colors
+//          A8I32           maximum 32 colors (indexed), 3 bits for alpha channel and 5 bits for colors
+//          A256I64         maximum 64 colors (indexed), have alpha channel
+//          A256I128        maximum 128 colors (indexed), have alpha channel
+//          A256I256        maximum 256 colors (indexed), have alpha channel
+//          RAW         non indexed, raw format
+//          GIF         encode gif data for DOJA
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////
+    // Header...
+
+    2 bytes -> file type/version (BSPRITE_v005 = 0x05DF)
+    4 bytes -> flags (BS_...)
+
+    //////////////////////////////////////////////////
+    // Modules...
+
+    if (BS_MODULES)
+    {
+        2 bytes -> nm = number of modules
+        for each module (nm):
+        {
+			if (next byte == 0xFF) // -> MD_RECT
+			{
+				1 byte -> 0xFF
+				4 bytes -> color
+				if (m_dwExportFlags & BS_MODULES_WH_SHORT)
+				{
+					2 bytes -> frame width
+					2 bytes -> frame height
+				}
+				else
+				{
+					1 byte -> frame width
+					1 byte -> frame height
+				}
+			}
+			else if (next byte == 0xFE) // -> MD_FILL_RECT
+			{
+				1 byte -> 0xFE
+				4 bytes -> color
+				if (m_dwExportFlags & BS_MODULES_WH_SHORT)
+				{
+					2 bytes -> frame width
+					2 bytes -> frame height
+				}
+				else
+				{
+					1 byte -> frame width
+					1 byte -> frame height
+				}
+			}
+			else if (next byte == 0xFD) // -> MD_MARKER
+			{
+				1 byte -> 0xFD
+				if (m_dwExportFlags & BS_MODULES_WH_SHORT)
+				{
+					2 bytes -> frame width
+					2 bytes -> frame height
+				}
+				else
+				{
+					1 byte -> frame width
+					1 byte -> frame height
+				}
+			}
+			else if (next byte == 0xFC) // -> MD_ARC
+			{
+				1 byte -> 0xFC
+				4 bytes -> color
+				if (m_dwExportFlags & BS_MODULES_WH_SHORT)
+				{
+					2 bytes -> frame width
+					2 bytes -> frame height
+				}
+				else
+				{
+					1 byte -> frame width
+					1 byte -> frame height
+				}
+				2 bytes -> start angle
+				2 bytes -> arc angle
+			}
+			else if (next byte == 0xFB) // -> MD_FILL_ARC
+			{
+				1 byte -> 0xFB
+				4 bytes -> color
+				if (m_dwExportFlags & BS_MODULES_WH_SHORT)
+				{
+					2 bytes -> frame width
+					2 bytes -> frame height
+				}
+				else
+				{
+					1 byte -> frame width
+					1 byte -> frame height
+				}
+				2 bytes -> start angle
+				2 bytes -> arc angle
+			}
+			else if (next byte == 0xFA) // -> MD_TRIANGLE
+			{
+				1 byte -> 0xFA
+				4 bytes -> color
+				
+				2 bytes -> p2X
+				2 bytes -> p2Y
+				2 bytes -> p3X
+				2 bytes -> p3Y
+			}
+			else if (next byte == 0xF9) // -> MD_FILL_TRIANGLE
+			{
+				1 byte -> 0xF9
+				4 bytes -> color
+				
+				2 bytes -> p2X
+				2 bytes -> p2Y
+				2 bytes -> p3X
+				2 bytes -> p3Y
+			}
+			else if (next byte == 0) // -> MD_IMAGE
+		    {
+		    	1 byte -> 0
+		        if (BS_MODULES_IMG)
+	            {
+	                1 byte -> image
+	            }
+	            if (BS_MODULES_XY_SHORT)
+		        {
+		            2 byte -> frame pos x
+		            2 byte -> frame pos y
+			    }	
+		        else if (BS_MODULES_XY)
+		        {
+		        	1 byte -> frame pos x
+		            1 byte -> frame pos y
+		        }
+		        if (m_dwExportFlags & BS_MODULES_WH_SHORT)
+				{
+					2 bytes -> frame width
+					2 bytes -> frame height
+				}
+				else
+				{
+					1 byte -> frame width
+					1 byte -> frame height
+				}
+		    }
+        }
+    }
+	
+	 //////////////////////////////////////////////////
+    // Modules usage...
+	// Note: use with cmd "SetGlobalModuleUsageFlags(OPTION_USED_BY_FRAMES | OPTION_USED_BY_HYPERFRAMES | OPTION_USED_BY_ANIMS)"
+	
+	if (BS_MODULES_USAGE)
+	{
+		for each module (nm)
+		{
+			1 byte -> mu = modules usage 
+			/*
+			modules usage bit check:
+				mu&(1<<0) != 0 -> module has been used without any transformation flags somewhere
+				mu&(1<<1) != 0 -> used with Fx flag somewhere
+				mu&(1<<2) != 0 -> used with Fy somewhere
+				mu&(1<<3) != 0 -> used with Fx|Fy somewhere
+				mu&(1<<4) != 0 -> used with R somewhere
+				mu&(1<<5) != 0 -> used with R|Fx somewhere
+				mu&(1<<6) != 0 -> used with R|Fy somewhere
+				mu&(1<<7) != 0 -> used with R|Fx|Fy somewhere
+			*/
+		}        
+	}
+
+    //////////////////////////////////////////////////
+    // Frames...
+
+    if (BS_FRAMES)
+    {
+        2 bytes -> tnfm = total number of frame modules (FModules)
+        for each FModule (tnfm):
+        {
+            if (BS_FM_INDEX_SHORT)
+            {
+                2 byte -> module or hyper frame index
+            }
+            else
+            {
+                1 byte -> module or hyper frame index // 2+8 bits
+            }
+            if (BS_FM_OFF_SHORT)
+            {
+                2 bytes -> offset x
+                2 bytes -> offset y
+            }
+            else
+            {
+                1 byte -> offset x
+                1 byte -> offset y
+            }
+            if (BS_FM_PALETTE)
+                1 byte -> palette
+            1 bytes -> flags // bits 4, 5, 6, 7 are extension for module index
+            
+            if (BS_FM_FREE_ROTATE_SCALE)
+            {
+				2 bytes -> rotateVal
+				2 bytes -> scaleXVal
+				2 bytes -> scaleYVal
+		}
+        }
+        if (BS_FRAME_RECTS)
+        {
+            2 bytes -> tnfrc = total number of frame rects (Rects)
+            for each Rect (tnfrc):
+            {
+            	if (BS_FM_OFF_SHORT)
+            	{
+            		2 bytes -> rect x
+                	2 bytes -> rect y
+                	2 bytes -> rect w
+                	2 bytes -> rect h
+            	}
+            	else
+            	{
+                	1 byte -> rect x
+                	1 byte -> rect y
+                	1 byte -> rect w
+                	1 byte -> rect h
+                }
+            }
+        }
+        2 bytes -> nf = number of frames
+        for each frame (nf):
+        {
+            if (BS_NFM_SHORT)
+                2 bytes -> number of FModules used by this frame
+            else
+                1 byte -> number of FModules used by this frame
+                
+
+            if (!BS_NO_FM_START)
+                2 bytes -> first FModule index
+
+            if (BS_FRAME_RECTS)
+                1 byte -> number of Rects used by this frame
+        }
+        if (!BS_SKIP_FRAME_RC)
+        {
+            for each frame (nf):
+            {
+            	if (BS_FM_OFF_SHORT)
+            	{
+            		2 bytes -> bound rect x
+                	2 bytes -> bound rect y
+                	2 bytes -> bound rect w
+                	2 bytes -> bound rect h
+            	}
+            	else
+            	{
+	                1 byte -> bound rect x
+	                1 byte -> bound rect y
+	                1 byte -> bound rect w
+	                1 byte -> bound rect h
+	            }
+            }
+        }
+        if (BS_FRAME_COLL_RC)
+        {
+            for each frame (nf):
+            {
+            	if (BS_FM_OFF_SHORT)
+            	{
+            		2 bytes -> collision rect x
+                	2 bytes -> collision rect y
+                	2 bytes -> collision rect w
+                	2 bytes -> collision rect h
+            	}
+            	else
+            	{
+	                1 byte -> collision rect x
+	                1 byte -> collision rect y
+	                1 byte -> collision rect w
+	                1 byte -> collision rect h
+	            }
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////
+    // Anims...
+
+    if (BS_ANIMS)
+    {
+        2 bytes -> tnaf = total number of animation frames (AFrames)
+        for each AFrame (tnaf):
+        {
+            if (BS_AF_INDEX_SHORT)
+            {
+                2 byte -> frame index
+            }
+            else
+            {
+                1 byte -> frame index // 2+8 bits    
+            }
+            1 byte -> time
+            if (BS_AF_OFF_SHORT)
+            {
+                2 bytes -> offset x
+                2 bytes -> offset y
+            }
+            else
+            {
+                1 byte -> offset x
+                1 byte -> offset y
+            }
+            1 bytes -> flags // bits 4, 5, 6, 7 are extension for frame index
+        }
+        2 bytes -> na = number of animations
+        for each animation (na):
+        {
+            if (BS_NAF_SHORT)
+                2 byte -> number of AFrames used by this animation
+            else
+                1 bytes -> number of AFrames used by this animation
+
+            if (!BS_NO_AF_START)
+                2 bytes -> first AFrame index
+        }
+    }
+
+    //////////////////////////////////////////////////
+    // Modules image data...
+
+    if (BS_MODULE_IMAGES)
+    {
+        2 bytes -> pixel format
+
+        if (BS_MULTIPLE_IMAGES)
+		{
+            1 byte -> ni = number of images
+		}
+        else
+		{
+			ni = 1
+		}
+
+        for each image (ni):
+        {
+            if (BS_GIF_HEADER)
+            {
+                1 byte -> nh = number of GIF headers (max 256)
+                for each GIF header (nh):
+                {
+                    2 bytes -> hs = header size
+                    2 bytes -> wo = width offset in header
+                    hs bytes --> header data
+                }
+            }
+            else
+            {
+                1 byte -> np = number of palettes (max 256)
+                1 byte -> nc = number of colors / palette (max 256)
+                switch (pixel format)
+                {
+                    case "8888":    np * nc * 4 bytes -> each color is 4 bytes long
+                //  case "0888":    np * nc * 3 bytes -> each color is 3 bytes long
+                    case "4444":
+                    case "1555":
+                    case "0565":    np * nc * 2 bytes -> each color is 2 bytes long
+                    case "0332":    np * nc * 1 byte  -> each color is 1 byte long
+                }
+            }
+        }
+
+        2 bytes -> data format
+        for each module (nm):
+        {
+            if (BS_IMAGE_SIZE_INT)
+			{
+        		4 bytes -> ms = module image size
+			}
+        	else
+			{
+            	2 bytes -> ms = module image size
+			}
+            ms bytes -> module image data
+
+            if (BS_MODULE_IMAGES_FX)
+            {
+                // horiz. flipped module
+                2 bytes -> ms = module image size
+                ms bytes -> module image data
+            }
+        }
+
+        if (BS_PNG_CRC)
+        {
+            np * 4 bytes -> "PLTE" CRC
+            np * 4 bytes -> "tRNS" CRC
+            nm * 4 bytes -> "IHDR" CRC
+            nm * 4 bytes -> "IDAT" ADLER
+            nm * 4 bytes -> "IDAT" CRC
+
+            if (BS_MODULE_IMAGES_FX)
+            {
+                // horiz. flipped module
+                np * 4 bytes -> "PLTE" CRC
+                np * 4 bytes -> "tRNS" CRC
+                nm * 4 bytes -> "IHDR" CRC
+                nm * 4 bytes -> "IDAT" ADLER
+                nm * 4 bytes -> "IDAT" CRC
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////
+    // Single image data for indexed image
+
+    if (BS_SINGLE_IMAGE && (!BS_MODULE_IMAGES_TC_BMP))
+    {
+		if (BS_IMAGE_SIZE_INT)
+		{
+			4 bytes -> ps = png image size
+		}
+		else
+		{
+			2 bytes -> ps = png image size
+		}
+		
+        ps bytes -> png image data
+
+        1 byte -> np = number of palettes (max 256)
+        1 byte -> nc = number of colors / palette (max 256)
+
+		//read palette 1 -> palette np-1. palette 0 is already in png image data.
+        for each palette (np - 1):
+        {
+            nc * 3 bytes -> palette data bytes (PLTE)
+            4 bytes -> palette CRC
+
+            nc bytes -> transparency data bytes (tRNS)
+            4 bytes -> transparency CRC
+        }
+    }
+
+	//////////////////////////////////////////////////
+    // Modules image data and single image data - true color BMP 16bpp/24bpp/32bpp...
+	
+    if (BS_MODULE_IMAGES_TC_BMP)
+    {
+		2 bytes -> pixel format _0888, _8888
+	    2 bytes -> data format //RAW DATA
+			
+	    if (BS_SINGLE_IMAGE)
+	    {
+			1 byte ni - number of images
+			for each image (ni):
+			{
+		    	2 bytes - image width
+				2 bytes - image height
+				
+				if (pixel_format == _0888)
+				{
+					3*(image_width)*(image_height) bytes - RGB data for each pixel.
+				}
+				else if (pixel_format == _8888)
+				{
+					4*(image_width)*(image_height) bytes - ARGB data for each pixel.
+				}
+				else if (pixel_format == _4444)
+				{
+					2*(image_width)*(image_height) bytes - ARGB data for each pixel.
+				}
+			}
+	    }
+	    else
+	    {
+			if (BS_MULTIPLE_IMAGES)
+			{
+				1 byte ni - number of images
+			}
+			else
+			{
+				ni = 1;
+			}
+				
+			for each image (ni):
+			{
+				for each module (nm):
+				{
+					4 bytes -> ms = module image size
+
+					if (pixel_format == _0888)
+					{
+						ms bytes -> module image data 3*width*height(1 byte for each channel- RGB)      
+					}
+					else if (pixel_format == _8888)
+					{
+						ms bytes -> module image data 4*width*height(1 byte for each channel- ARGB)      
+					}
+					else if (pixel_format == _4444)
+					{
+						ms bytes -> module image data 2*width*height(4 bits for each channel- ARGB)
+					}
+				}
+			}			
+    	}
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+If you combine GIF for encode with |BS_GIF_HEADER|BS_SINGLE_IMAGE the gif will be exported complete.The format will be:
+	
+				|module     |
+				|frame      |
+				|anim       |
+				|rect       |
+				|-----------|
+
+				 
+
+				Someting            --  2 bytes <<< it value is 0x88 0x88 
+
+				Palette number – 1 byte
+
+				Color numbers – 1 byte
+
+				|-----------|
+
+				|pal0       |
+				|-----------|
+				|pal1       |
+				|-----------|
+				|pal2       |
+				|-----------|
+
+				|Gif dimension – 2 bytes
+				|gif file   |
+				|       data|
+

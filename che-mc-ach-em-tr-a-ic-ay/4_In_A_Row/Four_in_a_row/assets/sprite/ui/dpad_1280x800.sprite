@@ -1,0 +1,309 @@
+// saved by AuroraGT v0.1.0.2 (SpriteEditor v0.1.0.5)
+////////////////////////////////////////////////////////////////////////////////
+/*SPRITE*/ {
+
+    VERSION 0001
+
+    // Images:  1
+    // Modules: 41
+    // Frames:  37
+    // Anims:   0
+
+////////////////////////////////////////////////////////////////////////////////
+// Images...
+// <Image> := IMAGE [id] "file" [ALPHA "alpha_file"] [TRANSP transp_color]
+
+    IMAGE 0x0001 ".\dpad_1280x800.png" TRANSP 0x00FF00FF // 0  size: 1280 x 800  palettes: 1
+
+////////////////////////////////////////////////////////////////////////////////
+// Modules...
+// <Modules> := MODULES { <MD1> <MD2> ... }
+// <MDi>     := MD id Type [params] ["desc"]
+// Type      := MD_IMAGE | MD_RECT | ...
+// [params]  := if (Type == MD_IMAGE)     -> image x y width height
+//              if (Type == MD_RECT)      -> color width height
+//              if (Type == MD_FILL_RECT) -> color width height
+//              if (Type == MD_ARC)       -> color width height startAngle arcAngle
+//              if (Type == MD_FILL_ARC)  -> color width height startAngle arcAngle
+//              if (Type == MD_MARKER)    -> color width height
+//              if (Type == MD_TRIANGLE)  -> color p2X p2Y p3X p3Y
+//              if (Type == MD_FILL_TRIANGLE)  -> color p2X p2Y p3X p3Y
+
+    MODULES
+    {
+        MD	0x1003	MD_IMAGE	0	19	2	110	110
+        MD	0x1002	MD_IMAGE	0	322	1	110	110
+        MD	0x1001	MD_IMAGE	0	171	3	110	110
+        MD	0x1000	MD_IMAGE	0	473	0	110	110
+        MD	0x1011	MD_IMAGE	0	26	116	110	110
+        MD	0x1004	MD_IMAGE	0	322	110	110	110
+        MD	0x1006	MD_IMAGE	0	178	114	110	110
+        MD	0x1007	MD_IMAGE	0	475	114	110	110
+        MD	0x100C	MD_IMAGE	0	13	361	451	112
+        MD	0x100D	MD_IMAGE	0	9	230	451	114
+        MD	0x1013	MD_IMAGE	0	57	520	136	136
+        MD	0x1012	MD_IMAGE	0	52	663	136	136
+        MD	0x1014	MD_IMAGE	0	221	519	136	136
+        MD	0x1015	MD_IMAGE	0	222	664	136	136
+        MD	0x1016	MD_IMAGE	0	390	524	136	136
+        MD	0x1017	MD_IMAGE	0	387	664	136	136
+        MD	0x1018	MD_IMAGE	0	569	521	136	136
+        MD	0x1019	MD_IMAGE	0	565	664	136	136
+        MD	0x1005	MD_IMAGE	0	730	526	136	136
+        MD	0x100E	MD_IMAGE	0	726	664	136	136
+        MD	0x100F	MD_IMAGE	0	891	526	136	136
+        MD	0x1010	MD_IMAGE	0	888	664	136	136
+        MD	0x101A	MD_IMAGE	0	1055	524	136	136
+        MD	0x101B	MD_IMAGE	0	1050	664	136	136
+        MD	0x101C	MD_IMAGE	0	640	229	136	136
+        MD	0x101D	MD_IMAGE	0	640	368	136	136
+        MD	0x101E	MD_IMAGE	0	813	234	136	136
+        MD	0x101F	MD_IMAGE	0	811	376	136	136
+        MD	0x1020	MD_IMAGE	0	973	234	136	136
+        MD	0x1024	MD_IMAGE	0	971	377	136	136
+        MD	0x102F	MD_IMAGE	0	1138	232	136	136
+        MD	0x1030	MD_IMAGE	0	1136	376	136	136
+        MD	0x1021	MD_IMAGE	0	690	93	136	136
+        MD	0x1022	MD_IMAGE	0	842	94	136	136
+        MD	0x1023	MD_IMAGE	0	995	94	136	136
+        MD	0x1025	MD_IMAGE	0	482	243	126	55
+        MD	0x1026	MD_IMAGE	0	480	311	126	55
+        MD	0x1027	MD_IMAGE	0	476	373	126	55
+        MD	0x1028	MD_IMAGE	0	477	434	126	55
+        MD	0x102B	MD_IMAGE	0	627	7	615	45
+        MD	0x102A	MD_IMAGE	0	630	58	613	42
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+// Frames...
+// <Frame> := FRAME ["desc"] { id <RC1> [<RC2> ...] <FM1> [<FM2> ...] }
+// <RCi>   := RC x1 y1 x2 y2
+// <FMi>   := FM module_or_frame_id ox oy [FLAGS hex_flags] [+Flags]
+// Flags   := HYPER_FM | FLIP_X | FLIP_Y | ROT_90 | FREE_ROT
+
+    FRAME "BUTTON_NORMAL" // Index = 0, FModules = 1
+    {
+        0x2009
+        FM	0x100D	-231	-55
+    }
+
+    FRAME "BUTTON_HIGHT_LIGHT" // Index = 1, FModules = 1
+    {
+        0x200A
+        FM	0x100C	-231	-54
+    }
+
+    FRAME "BACK_NORMAL" // Index = 2, FModules = 1
+    {
+        0x200C
+        FM	0x1013	3	1
+    }
+
+    FRAME "BACK_HIGHT_LIGHT" // Index = 3, FModules = 1
+    {
+        0x200D
+        FM	0x1012	3	2
+    }
+
+    FRAME "NEXT_NORMAL" // Index = 4, FModules = 1
+    {
+        0x200E
+        FM	0x1014	1	1
+    }
+
+    FRAME "NEXT_HIGHTLIGHT" // Index = 5, FModules = 1
+    {
+        0x200F
+        FM	0x1015	1	1
+    }
+
+    FRAME "OK" // Index = 6, FModules = 1
+    {
+        0x2010
+        FM	0x1016	1	0
+    }
+
+    FRAME "OK_HIGHTLIGHT" // Index = 7, FModules = 1
+    {
+        0x2011
+        FM	0x1017	1	0
+    }
+
+    FRAME "CANCEL" // Index = 8, FModules = 1
+    {
+        0x2000
+        FM	0x1018	4	-1
+    }
+
+    FRAME "CANCEL_HIGHTLIGHT" // Index = 9, FModules = 1
+    {
+        0x2001
+        FM	0x1019	4	-1
+    }
+
+    FRAME "PAUSE" // Index = 10, FModules = 1
+    {
+        0x2012
+        FM	0x1005	4	1
+    }
+
+    FRAME "PAUSE_HIGHTLIGHT" // Index = 11, FModules = 1
+    {
+        0x2013
+        FM	0x100E	4	1
+    }
+
+    FRAME "RETRY" // Index = 12, FModules = 1
+    {
+        0x2002
+        FM	0x100F	5	3
+    }
+
+    FRAME "RETRY_HIGHTLIGHT" // Index = 13, FModules = 1
+    {
+        0x2003
+        FM	0x1010	5	3
+    }
+
+    FRAME "MAIN_MENU" // Index = 14, FModules = 1
+    {
+        0x2004
+        FM	0x101A	5	3
+    }
+
+    FRAME "MAIN_MENU_HIGHTLIGHT" // Index = 15, FModules = 1
+    {
+        0x200B
+        FM	0x101B	5	3
+    }
+
+    FRAME "OPTION_MENU" // Index = 16, FModules = 1
+    {
+        0x2014
+        FM	0x101C	5	3
+    }
+
+    FRAME "OPTION_MENU_HIGHTLIGHT" // Index = 17, FModules = 1
+    {
+        0x2015
+        FM	0x101D	5	3
+    }
+
+    FRAME "SOUND_ON" // Index = 18, FModules = 1
+    {
+        0x2016
+        FM	0x101E	5	3
+    }
+
+    FRAME "SOUND_ON_HIGHTLIGHT" // Index = 19, FModules = 1
+    {
+        0x2017
+        FM	0x101F	5	3
+    }
+
+    FRAME "SOUND_OFF" // Index = 20, FModules = 1
+    {
+        0x2018
+        FM	0x1020	5	3
+    }
+
+    FRAME "SOUND_OFF_HIGHTLIGHT" // Index = 21, FModules = 1
+    {
+        0x2019
+        FM	0x1024	5	3
+    }
+
+    FRAME "BUTTON_LEFT_NORMAL" // Index = 22, FModules = 1
+    {
+        0x201F
+        FM	0x1002	2	-5
+    }
+
+    FRAME "BUTTON_LEFT_HIGHTLIGHT" // Index = 23, FModules = 1
+    {
+        0x2020
+        FM	0x1004	2	-5
+    }
+
+    FRAME "BUTTON_RIGHT_NORMAL" // Index = 24, FModules = 1
+    {
+        0x2021
+        FM	0x1003	0	0
+    }
+
+    FRAME "BUTTON_RIGHT_HIGHTLIGHT" // Index = 25, FModules = 1
+    {
+        0x2022
+        FM	0x1011	0	0
+    }
+
+    FRAME "SELECT_LEVEL" // Index = 26, FModules = 1
+    {
+        0x201C
+        FM	0x1021	-65	-66
+    }
+
+    FRAME "SELECT_LEVEL_HIGHT_LIGHT" // Index = 27, FModules = 1
+    {
+        0x201D
+        FM	0x1022	-72	-65
+    }
+
+    FRAME "SELECT_LEVEL_LOCK" // Index = 28, FModules = 1
+    {
+        0x201E
+        FM	0x1023	-71	-63
+    }
+
+    FRAME "START_0" // Index = 29, FModules = 1
+    {
+        0x201A
+        FM	0x1025	-60	12
+    }
+
+    FRAME "START_1" // Index = 30, FModules = 1
+    {
+        0x201B
+        FM	0x1026	-60	12
+    }
+
+    FRAME "START_2" // Index = 31, FModules = 1
+    {
+        0x2023
+        FM	0x1027	-60	12
+    }
+
+    FRAME "START_3" // Index = 32, FModules = 1
+    {
+        0x2024
+        FM	0x1028	-60	12
+    }
+
+    FRAME "TIMER_BAR_0" // Index = 33, FModules = 1
+    {
+        0x2026
+        FM	0x102B	-2	1
+    }
+
+    FRAME "TIMER_BAR_1" // Index = 34, FModules = 1
+    {
+        0x2027
+        FM	0x102A	1	3
+    }
+
+    FRAME "BUTTON" // Index = 35, FModules = 1
+    {
+        0x202B
+        FM	0x102F	2	-1
+    }
+
+    FRAME "BUTTON_001" // Index = 36, FModules = 1
+    {
+        0x202C
+        FM	0x1030	2	-1
+    }
+
+    SPRITE_END
+
+} // SPRITE
+////////////////////////////////////////////////////////////////////////////////

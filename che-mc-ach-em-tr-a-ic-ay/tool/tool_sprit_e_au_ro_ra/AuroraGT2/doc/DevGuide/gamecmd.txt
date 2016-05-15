@@ -1,0 +1,166 @@
+AuroraGT can run commands from a script file.
+The file must have extension (".gamecmd") and must be specified between quotation marks.
+Use: AuroraGT.exe "file.gamecmd" (generated filed place in given folder)
+or from IDE: File\Run... -> choose "file.gamecmd" to be run (AuroraGT will produce exported files in the same location with *.gamecmd)
+
+With game file commands you can load a game file, export into a binary format with different parameters.
+The export file are .layers , .tasks ,.h and .java
+Limitations:
+    You need use right commands    
+You can use C++ comment style (//, /* ... */) to comment lines in the script file.
+
+---------------------------------------------------******---------------------------------------------------
+Commands:
+	LOG_FILE "export.log" 
+	-> Write log in file "export.log"	
+	--------------------------------------------------
+	GTS_SRC_FILE "GTS" [GTS_USE_GL_PREFIX]
+	-> Create 3 files 
+		GTS.java contain interface Templates Object, Data Types List
+		GTS.h contain define all data tyle list and template object layer		
+		GTS_debug.h contain array const for debug
+	-> Option GTS_USE_GL_PREFIX: optional flag to export follow to GameLoft rule
+	--------------------------------------------------			
+	GTS_EXPORT_TEMPLATE_ARRAY ["GTS"]
+	--> Create 2 files
+		GTS_template.java contain interface template include templates id and index of parameters in templates
+		GTS_template.jpp contain array teamplates export format: 
+				short[][] GTS_FORMAT = {
+										Template_Id, Param_index, Param_Type
+										, ...
+										.....
+										}
+				--->Template_Id : index of the exported template (generated in GTS_template.java).
+				--->Param_Index : index of the exported template parameter (generated in GTS_template.java).
+				--->Param_Type  : type of the exported template parameter. 
+		
+	--------------------------------------------------			
+	GAME_SRC_FILE	"GUI_GAME"
+	-> Create 4 files 
+		GUI_GAME.java contain interface level include layer object each interface
+		GUI_GAME.h contain define all level and layer object		
+		GUI_GAME_debug.java contain array const for debug
+		GUI_GAME_debug.h contain methode for debug		
+	--------------------------------------------------
+	CINEMATICS_GTS_SRC_FILE "CINEMATICS"
+	-> Create 3 files
+    CINEMATICS.java  contain all interface command in cinematics
+	CINEMATICS_debug.java contain code execution cinematics
+	CINEMATICS_implement.java create funtion for each command in cinematics,You can enter code in fuction
+	--------------------------------------------------
+	CINEMATICS_GAME_SRC_FILE "GAME_CINEMATICS"
+	GAME_CINEMATICS.java
+	GAME_CINEMATICS.h
+	GAME_CINEMATICS_debug.java
+	This command not yet
+	--------------------------------------------------
+    
+---------------------------------------------------******---------------------------------------------------
+Optional defines:
+
+	MAPS
+	{
+		MAP
+		{
+			TEMPLATE "templateName"// same name template in gts file
+			EXTENSION "extension"//data out put add next this to level name
+			OPTIONS USE_LAYER_NAMES | SIZE_ON_SHORT | ...
+		}
+		MAP
+		{
+			...
+			...
+			...
+		}
+	}
+	
+	*Note:
+	OPTIONS value should be combined by follwing flags:		
+		USE_LAYER_NAMES             -> Exported file is name based on layer name
+		SIZE_ON_SHORT               -> Map width and height exported are short instead of byte
+		HEADER_INDICES_ONE_FILE     -> Export only one file for headers and map data
+		NO_CONV_TABLE               -> Do not use short array conversion table array
+                                        You need check number frame or module defend tile format
+		INDICES_AS_SHORT            -> Export map indices as short(if number-of-tiles more than 256 tiles) instead of byte (default)
+		USE_GAMEWITCH_FLIP_FLAGS    -> Use gamewitch specific flags for flip instead of sprite
+		COLLISION                   -> Use with current map is a collision MAP
+		SCEO                        -> Specific Splinter Cell Extended Ops game
+		DONT_REMOVE_UNUSED_TILES    -> It will not delete tiles unused
+		DONT_REMOVE_UNUSED_MODULES  -> It will not delete module unused
+		CLONE_FLIPPED_TILES         -> Clone every tile is flip
+		REUSE_FLIPPED_TILES         -> Optimazation for transformed tiles
+		ENCODE_TILE_FLAGS_I4        -> Encode each tile in 4 bits. Useful if you have transformtion in maps (max 4 values, 4 values / 1 byte)
+		ENCODE_TILESET_MASK_I4      -> Encode tileset mask in I4 format (max 4 values, 4 values / 1 byte)
+		ENCODE_TILESET_MASK_I16     -> Encode tileset mask in I16 format (max 16 values, 2 values / 1 byte)
+		TILE_SIZE_ON_SHORT          -> Export tileset width, tileset height, iso params as short instead of byte
+		MAP_HEADER_EXPORT_EXTRA_INFO-> Information about tileset example: Tile Width,Tile Height,Tile Iso...
+			Term				Export(depend data)		Size(byte) 
+			map_w										1/2 if you use SIZE_ON_SHORT
+			map_h										1/2 if you use SIZE_ON_SHORT
+			index_bitShift								2
+			tile_w										1/2 if you use TILE_SIZE_ON_SHORT
+			tile_h										1/2 if you use TILE_SIZE_ON_SHORT
+			iso_view									1
+			iso_x_dx									1/2 if you use TILE_SIZE_ON_SHORT
+			iso_x_dy									1/2 if you use TILE_SIZE_ON_SHORT
+			iso_y_dy									1/2 if you use TILE_SIZE_ON_SHORT
+			iso_y_dx									1/2 if you use TILE_SIZE_ON_SHORT
+			tile_count									1
+			len of name									1
+			tilesprites_names							(len of name)*1(byte)
+			len of name									1
+			tilesprites_names							...
+			len of name									...
+			......
+		USE_MAP_EXPORT_LEVEL_NAME   -> Export data file name follow level name
+
+	--------------------------------------------------
+	OBJ_LAYERS
+	{		
+		OPTIONS USE_TEMPLATE_EXPORT_FORMAT | EXPORT_OBJ_ID | ...
+	}
+	
+	OPTIONS value should be combined by follwing flags:
+		EXPORT_OBJ_ID                   -> Specify to export object Unique ID in level
+		NOT_EXPORT_OBJ_XY               -> Do not export object posX and PosY(with variable is short)
+		EXPORT_OBJ_ANCHOR               -> Specify to export anchor
+		EXPORT_OBJ_SNAP_ID              -> Save the ID value of all object being snapped to
+		EXPORT_POINTS_XY                -> Export point posX,posY (with variable is short)
+		EXPORT_POINTS_PARAM             -> Export param of object layer
+		USE_TEMPLATE_EXPORT_FORMAT      -> Export follow standard
+		USE_TEMPLATE_EXPORT_LEVEL_NAME  -> Export data name is level name
+
+	--------------------------------------------------
+	TILED_LAYERS
+	{		
+		OPTIONS USE_TEMPLATE_EXPORT_LEVEL_NAME | EXPORT_TILED_XY | ...
+	}
+	
+	OPTIONS value should be combined by follwing flags:
+		EXPORT_TILED_ID                 -> Specify to export tiled layer Unique ID in level
+		EXPORT_TILED_XY               	-> Export tiled layer posX and PosY(with variable is short)
+		USE_TEMPLATE_EXPORT_LEVEL_NAME  -> Export data name is level name
+
+	----------------------------------------------------------------------------------
+	Command export task
+		TASKS
+		{
+			OPTIONS FINAL_OFFSET | ...
+			
+		}
+	OPTIONS value should be combined by follwing flags:
+		OPTIONS FINAL_OFFSET            -> Export have FinallyOffset(is number offset of cmd);
+		USE_TASKS_EXPORT_LEVEL_NAME     -> Export data task file name follow level name
+
+	-----------------------------------------------------------------------------------
+    
+---------------------------------------------------******---------------------------------------------------
+Init .fft file
+	InitGameFFT("game_export.fft")
+	game_export.fft -> must be Template FILE_FORMAT_TEMPLATE "GameFFT"
+	define data types ,INT8,UINT8,INT16,UINT16,INT32,UINT32
+	ExportGameFFT(WRITE_LOG)
+	
+	WRITE_LOG->Write log about export FFT file
+	
+	
