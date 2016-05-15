@@ -38,8 +38,8 @@ public class StateIngameMenu extends ChemFruit implements IConstant
 	public static final int MENU_EXIT = 4;
 	public static final int MENU_RESUME = 5;
 	public static final int MENU_BACK_TO_MAINMENU = 6;
-	public static int[] arrayMenu = { MENU_RESUME, MENU_RESTART, MENU_OPTION_SOUND, MENU_BACK_TO_MAINMENU, MENU_EXIT };
-	public static String[] arrayMenuString = { "CHƠI GAME", "CHƠI LẠI", "ÂM THANH : ", "MENU CHÍNH", "THOÁT" };
+	public static int[] arrayMenu = { MENU_RESUME, MENU_RESTART, MENU_OPTION_SOUND, MENU_BACK_TO_MAINMENU/*, MENU_EXIT*/ };
+	public static String[] arrayMenuString = { "CHƠI GAME", "CHƠI LẠI", "ÂM THANH : ", "MENU CHÍNH",/* "THOÁT" */};
 	public static int MENU_BEGIN_X = SCREEN_WIDTH / 2;
 	public static int MENU_BEGIN_Y = 0;
 	public static int MENU_ELEMENT_W = 0;
@@ -58,7 +58,7 @@ public class StateIngameMenu extends ChemFruit implements IConstant
 		case MESSAGE_CTOR:
 			SoundManager.pausesoundLoop(1);
 			MENU_BACKGROUND_W = SCREEN_WIDTH / 4 * 3;
-			MENU_BACKGROUND_H = SCREEN_HEIGHT / 6 * 5;
+			MENU_BACKGROUND_H = SCREEN_HEIGHT / 7 * 5;
 			MENU_ELEMENT_H = spriteDPad.getFrameHeight(DEF.FRAME_BUTTON_NORMAL);
 			MENU_ELEMENT_W = spriteDPad.getFrameWidth(DEF.FRAME_BUTTON_NORMAL);
 			MENU_ELEMENT_SPACE = (MENU_BACKGROUND_H - ((arrayMenu.length + 1) * MENU_ELEMENT_H)) / arrayMenu.length;

@@ -81,9 +81,11 @@ public class StateWinLose extends ChemFruit
 			if (isKeyReleased(KeyEvent.KEYCODE_BACK) || ChemFruit.isTouchReleaseInRect(DEF.WINLOSE_BUTTON_X2, DEF.WINLOSE_BUTTON_Y2, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H))
 				changeState(STATE_MAINMENU);
 			
-			if (ChemFruit.isTouchReleaseInRect(DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H)) {					
-					changeState(STATE_LEADERBOARD);
-				}
+			////here for leaderBoard
+			//if (ChemFruit.isTouchReleaseInRect(DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H)) {					
+			//		changeState(STATE_LEADERBOARD);
+			//	}
+			//end here for leaderBoard
 
 			break;
 		case MESSAGE_PAINT:
@@ -131,11 +133,12 @@ public class StateWinLose extends ChemFruit
 					spriteDPad.drawAFrame(ChemFruit.mainCanvas, DEF.FRAME_MAINMENU_NORMAL, DEF.WINLOSE_BUTTON_X2, DEF.WINLOSE_BUTTON_Y2);
 				else
 					spriteDPad.drawAFrame(ChemFruit.mainCanvas, DEF.FRAME_MAINMENU_HIGHTLIGHT, DEF.WINLOSE_BUTTON_X2, DEF.WINLOSE_BUTTON_Y2);
-				
-				if (!ChemFruit.isTouchDrapInRect(DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H))
-					spriteDPad.drawAFrame(ChemFruit.mainCanvas, DEF.FRAME_LEADERBOARD_NORMAL, DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3);
-				else
-					spriteDPad.drawAFrame(ChemFruit.mainCanvas, DEF.FRAME_LEADERBOARD_HIGHTLIGHT, DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3);
+				//here for leaderBoard
+				//if (ChemFruit.isTouchDrapInRect(DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H))
+				//	spriteDPad.drawAFrame(ChemFruit.mainCanvas, DEF.FRAME_LEADERBOARD_NORMAL, DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3);
+				//else
+				//	spriteDPad.drawAFrame(ChemFruit.mainCanvas, DEF.FRAME_LEADERBOARD_HIGHTLIGHT, DEF.WINLOSE_BUTTON_X3, DEF.WINLOSE_BUTTON_Y3);
+				//ernd //here for leaderBoard
 			}
 			break;
 		case MESSAGE_DTOR:

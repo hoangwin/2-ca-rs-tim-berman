@@ -67,7 +67,7 @@ public class StateMainMenu extends ChemFish implements IConstant
 			
 			MENU_H = (MENU_ELEMENT_SPACE + MENU_ELEMENT_H) * arrayMenu.length;
 			MENU_BEGIN_Y = (int)(scaleY*320);
-			MENU_BUTTON_ICON_Y = (int)(scaleY*600);			
+			MENU_BUTTON_ICON_Y = (int)(scaleY*400);			
 			StateGameplay.isIngame = false;
 			//SoundManager.playSound(SoundManager.SOUND_TITLE,1);
 			SoundManager.playsoundLoop(0, true);
@@ -143,11 +143,11 @@ public class StateMainMenu extends ChemFish implements IConstant
 					SoundManager.playsoundLoop(0, true);
 				}
 			}
-
-			if (ChemFish.isTouchReleaseInRect(SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H)) {
-				changeState(STATE_LEADERBOARD);
-			}
-
+			//		here for leaderBoard
+			//if (ChemFish.isTouchReleaseInRect(SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H)) {
+			//	changeState(STATE_LEADERBOARD);
+			//}
+			//end here for leaderBoard
 			if (ChemFish.isTouchReleaseInRect(SCREEN_WIDTH - 3 * DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H)) {
 				Dialog.showDialog(Dialog.DIALOG_TYPE_CONFIRM, "", "BẠN MUỐN THOÁT GAME?", Dialog.DIALOG_NEXTSTATE_EXIT);
 			}
@@ -196,11 +196,12 @@ public class StateMainMenu extends ChemFish implements IConstant
 			else
 				spriteDPad.drawAFrame(ChemFish.mainCanvas, soundIndexFrame + 1, DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y);
 
-			if (ChemFish.isTouchDrapInRect(SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H))
-				spriteDPad.drawAFrame(ChemFish.mainCanvas, DEF.FRAME_LEADERBOARD_HIGHTLIGHT, SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y);
-			else
-				spriteDPad.drawAFrame(ChemFish.mainCanvas, DEF.FRAME_LEADERBOARD_NORMAL, SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y);
-
+			//here for leaderBoard
+			//if (ChemFish.isTouchDrapInRect(SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H))
+			//	spriteDPad.drawAFrame(ChemFish.mainCanvas, DEF.FRAME_LEADERBOARD_HIGHTLIGHT, SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y);
+			//else
+			//	spriteDPad.drawAFrame(ChemFish.mainCanvas, DEF.FRAME_LEADERBOARD_NORMAL, SCREEN_WIDTH / 2 - DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y);
+			//end here for leaderBoard
 			if (ChemFish.isTouchDrapInRect(SCREEN_WIDTH - 3 * DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y, DEF.DIALOG_BUTTON_CONFIRM_W, DEF.DIALOG_BUTTON_CONFIRM_H))
 				spriteDPad.drawAFrame(ChemFish.mainCanvas, DEF.FRAME_QUIT_NORMAL, SCREEN_WIDTH - 3 * DEF.DIALOG_BUTTON_CONFIRM_W / 2, MENU_BUTTON_ICON_Y);
 			else

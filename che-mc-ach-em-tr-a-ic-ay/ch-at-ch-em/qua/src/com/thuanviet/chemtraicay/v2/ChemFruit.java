@@ -16,6 +16,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.thuanviet.chemtraicay.v2.gameplay.GamePlay;
 import com.thuanviet.chemtraicay.v2.state.StateCreadit;
 import com.thuanviet.chemtraicay.v2.state.StateGameplay;
