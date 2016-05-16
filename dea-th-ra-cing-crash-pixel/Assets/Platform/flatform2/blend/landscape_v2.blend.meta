@@ -3,8 +3,297 @@ guid: ac4cdd47cf0a62d4e8e604f2cd962cdc
 timeCreated: 1425866888
 licenseType: Free
 ModelImporter:
-  serializedVersion: 18
-  fileIDToRecycleName: {}
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: building-office-small
+    100002: canal-corner-high
+    100004: canal-corner-low
+    100006: canal-high-water-low
+    100008: canal-hill
+    100010: canal-river-high
+    100012: canal-river-low
+    100014: canal-straight-high
+    100016: canal-straight-low
+    100018: dirt-low
+    100020: grass
+    100022: hill-corner-high
+    100024: hill-corner-low
+    100026: hill-ramp
+    100028: hill-road_006
+    100030: //RootNode
+    100032: lot
+    100034: lot-border
+    100036: lot-corner
+    100038: lot-exit
+    100040: lot-parking
+    100042: river-corner-high
+    100044: river-corner-low
+    100046: river-end-high
+    100048: river-end-low
+    100050: river-hill
+    100052: river-straight-high
+    100054: river-straight-low
+    100056: road-bridge-canal
+    100058: road-bridge-coast
+    100060: road-bridge-grass
+    100062: road-bridge-hill
+    100064: road-bridge-ramp
+    100066: road-bridge-river
+    100068: road-bridge-road
+    100070: road-bridge-water
+    100072: road-corner-high
+    100074: road-corner-low
+    100076: road-crossing-high
+    100078: road-crossing-low
+    100080: road-end-high
+    100082: road-end-low
+    100084: road-hill
+    100086: road-straight-high
+    100088: road-straight-low
+    100090: road-tjunction-high
+    100092: road-tjunction-low
+    100094: road-tunnel-entry
+    100096: road-tunnel-segment
+    100098: sand
+    100100: water
+    100102: water-beach-concave
+    100104: water-beach-convex
+    100106: water-beach-straight
+    100108: water-bedding-convex
+    100110: water-bedding-straight
+    100112: water-beddng-concave
+    100114: water-river-junction
+    400000: building-office-small
+    400002: canal-corner-high
+    400004: canal-corner-low
+    400006: canal-high-water-low
+    400008: canal-hill
+    400010: canal-river-high
+    400012: canal-river-low
+    400014: canal-straight-high
+    400016: canal-straight-low
+    400018: dirt-low
+    400020: grass
+    400022: hill-corner-high
+    400024: hill-corner-low
+    400026: hill-ramp
+    400028: hill-road_006
+    400030: //RootNode
+    400032: lot
+    400034: lot-border
+    400036: lot-corner
+    400038: lot-exit
+    400040: lot-parking
+    400042: river-corner-high
+    400044: river-corner-low
+    400046: river-end-high
+    400048: river-end-low
+    400050: river-hill
+    400052: river-straight-high
+    400054: river-straight-low
+    400056: road-bridge-canal
+    400058: road-bridge-coast
+    400060: road-bridge-grass
+    400062: road-bridge-hill
+    400064: road-bridge-ramp
+    400066: road-bridge-river
+    400068: road-bridge-road
+    400070: road-bridge-water
+    400072: road-corner-high
+    400074: road-corner-low
+    400076: road-crossing-high
+    400078: road-crossing-low
+    400080: road-end-high
+    400082: road-end-low
+    400084: road-hill
+    400086: road-straight-high
+    400088: road-straight-low
+    400090: road-tjunction-high
+    400092: road-tjunction-low
+    400094: road-tunnel-entry
+    400096: road-tunnel-segment
+    400098: sand
+    400100: water
+    400102: water-beach-concave
+    400104: water-beach-convex
+    400106: water-beach-straight
+    400108: water-bedding-convex
+    400110: water-bedding-straight
+    400112: water-beddng-concave
+    400114: water-river-junction
+    2300000: building-office-small
+    2300002: canal-corner-high
+    2300004: canal-corner-low
+    2300006: canal-high-water-low
+    2300008: canal-hill
+    2300010: canal-river-high
+    2300012: canal-river-low
+    2300014: canal-straight-high
+    2300016: canal-straight-low
+    2300018: dirt-low
+    2300020: grass
+    2300022: hill-corner-high
+    2300024: hill-corner-low
+    2300026: hill-ramp
+    2300028: hill-road_006
+    2300030: lot
+    2300032: lot-border
+    2300034: lot-corner
+    2300036: lot-exit
+    2300038: lot-parking
+    2300040: river-corner-high
+    2300042: river-corner-low
+    2300044: river-end-high
+    2300046: river-end-low
+    2300048: river-hill
+    2300050: river-straight-high
+    2300052: river-straight-low
+    2300054: road-bridge-canal
+    2300056: road-bridge-coast
+    2300058: road-bridge-grass
+    2300060: road-bridge-hill
+    2300062: road-bridge-ramp
+    2300064: road-bridge-river
+    2300066: road-bridge-road
+    2300068: road-bridge-water
+    2300070: road-corner-high
+    2300072: road-corner-low
+    2300074: road-crossing-high
+    2300076: road-crossing-low
+    2300078: road-end-high
+    2300080: road-end-low
+    2300082: road-hill
+    2300084: road-straight-high
+    2300086: road-straight-low
+    2300088: road-tjunction-high
+    2300090: road-tjunction-low
+    2300092: road-tunnel-entry
+    2300094: road-tunnel-segment
+    2300096: sand
+    2300098: water
+    2300100: water-beach-concave
+    2300102: water-beach-convex
+    2300104: water-beach-straight
+    2300106: water-bedding-convex
+    2300108: water-bedding-straight
+    2300110: water-beddng-concave
+    2300112: water-river-junction
+    3300000: building-office-small
+    3300002: canal-corner-high
+    3300004: canal-corner-low
+    3300006: canal-high-water-low
+    3300008: canal-hill
+    3300010: canal-river-high
+    3300012: canal-river-low
+    3300014: canal-straight-high
+    3300016: canal-straight-low
+    3300018: dirt-low
+    3300020: grass
+    3300022: hill-corner-high
+    3300024: hill-corner-low
+    3300026: hill-ramp
+    3300028: hill-road_006
+    3300030: lot
+    3300032: lot-border
+    3300034: lot-corner
+    3300036: lot-exit
+    3300038: lot-parking
+    3300040: river-corner-high
+    3300042: river-corner-low
+    3300044: river-end-high
+    3300046: river-end-low
+    3300048: river-hill
+    3300050: river-straight-high
+    3300052: river-straight-low
+    3300054: road-bridge-canal
+    3300056: road-bridge-coast
+    3300058: road-bridge-grass
+    3300060: road-bridge-hill
+    3300062: road-bridge-ramp
+    3300064: road-bridge-river
+    3300066: road-bridge-road
+    3300068: road-bridge-water
+    3300070: road-corner-high
+    3300072: road-corner-low
+    3300074: road-crossing-high
+    3300076: road-crossing-low
+    3300078: road-end-high
+    3300080: road-end-low
+    3300082: road-hill
+    3300084: road-straight-high
+    3300086: road-straight-low
+    3300088: road-tjunction-high
+    3300090: road-tjunction-low
+    3300092: road-tunnel-entry
+    3300094: road-tunnel-segment
+    3300096: sand
+    3300098: water
+    3300100: water-beach-concave
+    3300102: water-beach-convex
+    3300104: water-beach-straight
+    3300106: water-bedding-convex
+    3300108: water-bedding-straight
+    3300110: water-beddng-concave
+    3300112: water-river-junction
+    4300000: river-hill
+    4300002: river-corner-high
+    4300004: river-straight-high
+    4300006: river-end-high
+    4300008: river-end-low
+    4300010: canal-straight-high
+    4300012: canal-river-high
+    4300014: canal-corner-high
+    4300016: road-end-high
+    4300018: road-tunnel-entry
+    4300020: road-crossing-high
+    4300022: road-tjunction-high
+    4300024: road-bridge-river
+    4300026: water-beach-straight
+    4300028: water-beach-convex
+    4300030: road-tunnel-segment
+    4300032: hill-corner-low
+    4300034: hill-ramp
+    4300036: road-straight-high
+    4300038: road-hill
+    4300040: hill-corner-high
+    4300042: road-corner-high
+    4300044: hill-road_006
+    4300046: canal-straight-low
+    4300048: canal-corner-low
+    4300050: road-bridge-water
+    4300052: canal-river-low
+    4300054: road-bridge-canal
+    4300056: river-straight-low
+    4300058: river-corner-low
+    4300060: water-river-junction
+    4300062: road-bridge-ramp
+    4300064: road-bridge-grass
+    4300066: water-bedding-straight
+    4300068: canal-high-water-low
+    4300070: canal-hill
+    4300072: sand
+    4300074: water
+    4300076: road-end-low
+    4300078: road-bridge-road
+    4300080: road-tjunction-low
+    4300082: road-straight-low
+    4300084: building-office-small
+    4300086: road-corner-low
+    4300088: water-bedding-convex
+    4300090: water-beddng-concave
+    4300092: water-beach-concave
+    4300094: lot-corner
+    4300096: road-bridge-coast
+    4300098: road-bridge-hill
+    4300100: lot-parking
+    4300102: lot-border
+    4300104: lot-exit
+    4300106: road-crossing-low
+    4300108: lot
+    4300110: dirt-low
+    4300112: grass
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -12,12 +301,17 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
@@ -41,24 +335,25 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
