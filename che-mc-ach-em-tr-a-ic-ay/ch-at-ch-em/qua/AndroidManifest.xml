@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"    android:installLocation="auto"    package="package="com.thuanviet.chemtraicay.v2""    android:versionCode="8"    android:versionName="1.8" >
-  <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
-    <uses-sdk android:minSdkVersion="13" />  
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thuanviet.chemtraicay.v2"
+    android:versionCode="5"
+    android:versionName="1.5" >
+
+    <uses-sdk android:minSdkVersion="10" />  
      
-    <application     android:theme="@style/UnityThemeSelector"   android:icon="@drawable/ic_launcher"        android:label="@string/app_name" >
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
          <meta-data android:name="com.google.android.gms.version"
                android:value="@integer/google_play_services_version"/>
-
- <activity android:name="com.thuanviet.chemtraicay.v2.ChemFruit" android:label="Chém Trái Cây" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"        android:screenOrientation="landscape" >
-             <intent-filter>
+         <activity android:name="com.google.android.gms.ads.AdActivity"
+             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+ 		<activity
+            android:name="com.thuanviet.chemtraicay.v2.ChemFruit"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:label="Chém Trái Cây"
+             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-        <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity android:name="com.google.android.gms.ads.AdActivity"
-             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 	 
     </application>
 
