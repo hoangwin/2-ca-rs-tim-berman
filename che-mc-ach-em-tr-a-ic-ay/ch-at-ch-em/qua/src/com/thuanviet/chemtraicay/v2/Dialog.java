@@ -54,9 +54,9 @@ public class Dialog
 	public static void drawDialog(Canvas c)
 	{
 	
-		ChemFruit.mainPaint.setStyle(Style.FILL);
-		ChemFruit.mainPaint.setARGB(200, 0, 0, 0);
-		c.drawRect(0, 0, ChemFruit.SCREEN_WIDTH, ChemFruit.SCREEN_HEIGHT, ChemFruit.mainPaint);
+		//ChemFruit.mainPaint.setStyle(Style.FILL);
+		//ChemFruit.mainPaint.setARGB(200, 0, 0, 0);
+		//c.drawRect(0, 0, ChemFruit.SCREEN_WIDTH, ChemFruit.SCREEN_HEIGHT, ChemFruit.mainPaint);
 		//ChemFish.mainPaint.setStyle(Style.FILL_AND_STROKE);
 		//ChemFish.mainPaint.setColor(Color.argb(170,96, 167,217));
 		//c.drawRoundRect(rectF, 25, 25, ChemFish.mainPaint);

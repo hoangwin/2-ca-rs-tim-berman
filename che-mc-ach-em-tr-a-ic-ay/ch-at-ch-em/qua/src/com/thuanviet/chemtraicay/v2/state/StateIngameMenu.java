@@ -126,9 +126,9 @@ public class StateIngameMenu extends ChemFruit implements IConstant
 				Dialog.drawDialog(mainCanvas);
 				return;
 			}
-			ChemFruit.mainPaint.setStyle(Style.FILL);
-			ChemFruit.mainPaint.setARGB(200, 0, 0, 0);
-			ChemFruit.mainCanvas.drawRect(0, 0, ChemFruit.SCREEN_WIDTH, ChemFruit.SCREEN_HEIGHT, ChemFruit.mainPaint);
+			//ChemFruit.mainPaint.setStyle(Style.FILL);
+			//ChemFruit.mainPaint.setARGB(200, 0, 0, 0);
+			//ChemFruit.mainCanvas.drawRect(0, 0, ChemFruit.SCREEN_WIDTH, ChemFruit.SCREEN_HEIGHT, ChemFruit.mainPaint);
 			Rect textBounds =  new  Rect();
 			android_FontNormal.getTextBounds("Maig", 0, "Maig".length(), textBounds);
 			android_FontNormal.setTextAlign(Align.CENTER);			

@@ -116,8 +116,8 @@ public class StateWinLose extends ChemFruit
 			{
 				android_FontBig.setColor(Color.WHITE);
 				mainCanvas.drawText( "ĐIỂM : " + GamePlay.mAllScore,SCREEN_WIDTH/2, (int)(scaleY*380), android_FontBig);
-				if(GameViewThread.timeCurrent%1000>500)
-					mainCanvas.drawText( "VÀO XẾP HẠNG ĐỂ XEM THÀNH TÍCH",SCREEN_WIDTH/2, (int)(scaleY*480) , android_FontNormal);
+				//if(GameViewThread.timeCurrent%1000>500)
+				//	mainCanvas.drawText( "VÀO XẾP HẠNG ĐỂ XEM THÀNH TÍCH",SCREEN_WIDTH/2, (int)(scaleY*480) , android_FontNormal);
 			}
 			//mainCanvas.drawText( "TOUCH SCREEN TO CONTUINUE",SCREEN_WIDTH/2, (int)(scaleY*500), android_FontNormal);
 						

@@ -10,6 +10,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.SoundPool;
 import android.net.MailTo;
 import android.test.IsolatedContext;
+import android.util.Log;
 
 public class SoundManager { 
 	static private SoundManager _instance;
@@ -73,17 +74,23 @@ public class SoundManager {
 	{
 		if(!ChemFruit.isEnableSound)
 			return;
+		  try {
+			mMediaPlayer[index].reset();
+			 mMediaPlayer[index]= MediaPlayer.create(ChemFruit.context,R.raw.musicbg);
 		mMediaPlayer[index].start();
 		mMediaPlayer[index].setLooping(loop);
-		mMediaPlayer[index].setOnCompletionListener(new OnCompletionListener() {
+		//mMediaPlayer[index].setOnCompletionListener(new OnCompletionListener() {
 
-              public void onCompletion(MediaPlayer mp) {
-                  mp.release();
-                  mp = null;
+          //    public void onCompletion(MediaPlayer mp) {
+            //      mp.release();
+             //     mp = null;
 
-              }
-          });   
-	    	 
+              //}
+          //});   
+	    
+	        } catch (Exception exception) {
+	        	Log.d("aaa", "aaaaaa");
+	        }
 	}
 	public static void pausesoundLoop(int index)
 	{

@@ -94,6 +94,7 @@ public class GameViewThread extends SurfaceView implements Runnable {
 			while (ChemFruit.running) {
 				timeCurrent = System.currentTimeMillis();				
 				if ((timeCurrent - timePrev) > 1000 / FRAME_RATE_TARGET) {
+					if((timeCurrent - timePrev) !=0)
 					FRAME_RATE_CURRENT = 1000/(timeCurrent - timePrev);
 					// Log.d("ccc :", " " + (timeCurrent - timePrev));
 					if(!holder.getSurface().isValid())

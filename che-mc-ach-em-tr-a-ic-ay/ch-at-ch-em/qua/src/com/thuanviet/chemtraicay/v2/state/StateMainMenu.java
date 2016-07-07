@@ -68,8 +68,9 @@ public class StateMainMenu extends ChemFruit implements IConstant
 			MENU_BUTTON_ICON_Y = (int)(scaleY*400);			
 			StateGameplay.isIngame = false;
 			//SoundManager.playSound(SoundManager.SOUND_TITLE,1);
-			SoundManager.playsoundLoop(0, true);
 			SoundManager.pausesoundLoop(1);
+			SoundManager.playsoundLoop(0, true);
+			
 			
 			MainMenuEffect.init();
 			break;

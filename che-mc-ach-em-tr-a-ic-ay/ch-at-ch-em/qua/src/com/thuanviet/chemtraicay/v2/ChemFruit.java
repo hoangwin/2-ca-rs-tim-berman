@@ -101,7 +101,7 @@ public class ChemFruit extends GameLib
 		scaleX =  SCREEN_WIDTH*1.0f/1200;
 		scaleY = SCREEN_HEIGHT*1.0f/800;
 		//	10-14 01:11:41.250: I/Ads(1001): To get test ads on this device, call adRequest.addTestDevice("A5E4D10B9DD43396048C1F79524989DB");
-		String UID = "ca-app-pub-7727165943990659/6279085522";//thuan viet game-chem trai cay
+		String UID = "ca-app-pub-7727165943990659/6279085522";//thuan viet game-chem trai cay//"test = ca-app-pub-3940256099942544/6300978111"
 		 adView = new AdView(this);
 		    adView.setAdSize(AdSize.BANNER);
 		    adView.setAdUnitId(UID);
@@ -110,34 +110,34 @@ public class ChemFruit extends GameLib
 		final FrameLayout.LayoutParams adsParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, android.view.Gravity.BOTTOM | android.view.Gravity.CENTER);
 		
 		//
-		if (SCREEN_HEIGHT < 380) {
-			adsParams.setMargins(0, -25, 0, -25);
-		}
-		mainlayout.addView(mainView);
 		
+		mainlayout.addView(mainView);
+		if (SCREEN_HEIGHT >470) {
 
-	    AdRequest adRequest = new AdRequest.Builder()
-	        //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-	        //.addTestDevice("INSERT_YOUR_HASHED_DEVICE_ID_HERE")
-	        .build();
-	    adView.setAdListener(new AdListener() {
-	    	  @Override
-	    	  public void onAdOpened() {
-	    	    // Save app state before going to the ad overlay.
-	    	  }
-	    	  public void onAdLoaded(){
-	    		  if(isAddAdsView == false)
-	    		  {
-	    			  isAddAdsView = true;
-	    			  mainlayout.addView(adView, adsParams);
-	    		  }
-	    	  }
-	    	  public void onAdFailedToLoad(int errorCode){
-	    		  
-	    	  }
-	    	});
-	    // Start loading the ad in the background.
-	    adView.loadAd(adRequest);		
+		    AdRequest adRequest = new AdRequest.Builder()
+		        //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+		        //.addTestDevice("INSERT_YOUR_HASHED_DEVICE_ID_HERE")
+		        .build();
+		    adView.setAdListener(new AdListener() {
+		    	  @Override
+		    	  public void onAdOpened() {
+		    	    // Save app state before going to the ad overlay.
+		    	  }
+		    	  public void onAdLoaded(){
+		    		  if(isAddAdsView == false)
+		    		  {
+		    			  isAddAdsView = true;
+		    			  mainlayout.addView(adView, adsParams);
+		    		  }
+		    	  }
+		    	  public void onAdFailedToLoad(int errorCode){
+		    		  
+		    	  }
+		    	});
+		    // Start loading the ad in the background.
+		    adView.loadAd(adRequest);		
+		
+		}
 	    
 		setContentView(mainlayout);
 		
@@ -193,6 +193,9 @@ public class ChemFruit extends GameLib
 	public void loadGame()
 	{
 		String username = ChemFruit.mainActivity.getUsername();
+		if(username == null)
+			username = "User";
+		else
 		UserInfo.myUserInfo.userName = username;
 		SharedPreferences settings = getSharedPreferences(SAVE_REF, 0);
 		mLevelUnlock = settings.getInt(LEVEL_UNLOCK,0);
